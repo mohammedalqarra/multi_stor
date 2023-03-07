@@ -13,6 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// بستبدل route facade بال router object
+
+// $router = app()->make('router');
+
+// $router::get('/', function () {
+//     return view('welcome');
+// });
+
+
+
 Route::get('/', function () {
     return view('welcome');
 });
