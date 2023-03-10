@@ -28,4 +28,4 @@ use App\Http\Controllers\Admin\dashboardController;
 //     return view('admin.dashboard');
 // });
 
-Route::get('/' , [dashboardController::class , 'index']);
+Route::get('/dashboard' , [dashboardController::class , 'index']);
