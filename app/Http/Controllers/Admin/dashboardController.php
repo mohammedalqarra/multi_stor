@@ -12,6 +12,6 @@ class dashboardController extends Controller
     public function index()
     {
         // return response : view , json , redirect , file
-        return view('admin.dashboard');
+        return view('admin.index');
     }
 }
