@@ -11,8 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stores', function (Blueprint $table) {
+        Schema::create('stores', function (Blueprint $table) { // تحدد ال column
+            // id Bigint unsigned auto increment primary
             $table->id();
+            $table->string('name'); // Varchar(64)
+            $table->string('slug')->unique();
+            $table->text('description')->nullable();
+            $table->string('logo_image')->nullable();
+            $table->string('cover_image')->nullable();
+            $table->enum('status',['active' , 'inactive'])->default('active');
             $table->timestamps();
         });
     }
