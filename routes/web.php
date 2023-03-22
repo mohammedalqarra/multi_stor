@@ -29,7 +29,7 @@ Route::get('/dash', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/dashboard' , [dashboardController::class , 'index'])->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard' , [dashboardController::class , 'index'])->middleware(['auth' , 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
