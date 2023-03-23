@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class CategoriesController extends Controller
 {
@@ -12,6 +13,9 @@ class CategoriesController extends Controller
      */
     public function index()
     {
+        $categories = Category::all();
+
+        return view('dashboard.categories.index' . compact('categories'));
         //
     }
 
