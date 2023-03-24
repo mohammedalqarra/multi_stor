@@ -15,11 +15,11 @@ class CategoriesController extends Controller
     {
 
         if (request()->has('category')) {
-            $categories = Category::all()->where('name', 'like', '%' . request()->category . '%')->orderByDesc('id', 'desc')->paginate(10);
+            $categories = Category::where('name', 'like', '%' . request()->category . '%')->orderByDesc('id', 'desc')->paginate(10);
         } else {
-            $categories = Category::all()->where('name', 'like', '%' . request()->q . '%')->with('parent')->orderByDesc('id')->paginate(10);
+            $categories = Category::where('name', 'like', '%' . request()->q . '%')->with('parent')->orderByDesc('id')->paginate(10);
         }
-        // $categories = Category::all();
+         $categories = Category::all();
 
         return view('admin.categories.index', compact('categories'));
         //
