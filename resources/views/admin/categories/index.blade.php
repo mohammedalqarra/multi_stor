@@ -1,9 +1,9 @@
 @extends('admin.index')
 
-@section('title', 'Categories')
+@section('title', 'Categories |' . env('APP_NAME'))
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Categories</li>
+    <li class="breadcrumb-item active">All Categories</li>
 @endsection
 
 
@@ -15,14 +15,15 @@
             <button class="btn btn-dark px-5" id="button-addon2">Search</button>
         </div>
     </form>
-    <table class="table">
+    <table class="table table-bordered">
         <thead>
-            <tr>
+            <tr class="bg-dark text-white">
                 <th></th>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Parent</th>
                 <th>Create At</th>
+                <th>Actions</th>
                 <th colspan="2"></th>
             </tr>
         </thead>
@@ -34,19 +35,20 @@
                         <td>{{ $category->id }}</td>
                         <td>{{ $category->name }}</td>
                         <td>{{ $category->parent_id }}</td>
-                        <td>{{ $category->created_at }}</td>
+                        <td>{{ $category->created_at ? $category->diffForHumans() : '' }}</td>
                         <td>
-                            <a href="{{ route('categories.edit') }}" class="btn btn-sm btn-outline-succes">edit</a>
+                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-outline-succes"><i
+                                    class="fa fa-edit"></i>edit</a>
                         </td>
                         <td>
-                            <form action="{{ route('categories.destroy') }}" method="POST">
+                            <button class="btn btn-sm btn-outline-danger btn-delete">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                            <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
                                 @csrf
                                 <!-- Form Method Spoofing  -->
                                 <input type="hidden" name="_method" value="delete">
                                 @method('delete')
-                                <button class="btn btn-sm btn-outline-danger">
-                                    Delete
-                                </button>
                             </form>
                         </td>
                     </tr>
@@ -59,4 +61,32 @@
         </tbody>
     </table>
 
+   {{-- {{ $categories->appends($_GET)->links() }} --}}
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+    <script>
+        $('.btn-delete').on('click', function() {
+            let form = $(this).next('form');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                }
+            })
+        });
+    </script>
 @stop
