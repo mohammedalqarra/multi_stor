@@ -13,9 +13,15 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
 
-        return view('admin.categories.index' , compact('categories'));
+        if (request()->has('category')) {
+            $categories = Category::all()->where('name', 'like', '%' . request()->category . '%')->orderByDesc('id', 'desc')->paginate(10);
+        } else {
+            $categories = Category::all()->where('name', 'like', '%' . request()->q . '%')->with('parent')->orderByDesc('id')->paginate(10);
+        }
+        // $categories = Category::all();
+
+        return view('admin.categories.index', compact('categories'));
         //
     }
 
