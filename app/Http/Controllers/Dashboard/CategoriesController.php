@@ -15,7 +15,7 @@ class CategoriesController extends Controller
     {
         $categories = Category::all();
 
-        return view('dashboard.categories.index' . compact('categories'));
+        return view('admin.categories.index' , compact('categories'));
         //
     }
 
