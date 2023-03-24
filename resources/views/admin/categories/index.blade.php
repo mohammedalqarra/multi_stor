@@ -3,11 +3,14 @@
 @section('title', 'Categories |' . env('APP_NAME'))
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active">All Categories</li>
+    <h1 class="breadcrumb-item active">All Categories</h1>
 @endsection
 
 
 @section('content')
+<div class="mb-5">
+    <a href="{{ route('categories.create') }}" class="btn btn-lg btn-outline-primary w-25">Create</a>
+</div>
     <form action="{{ route('categories.index') }}" method="get">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Search here..." name="category"
