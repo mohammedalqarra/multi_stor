@@ -8,9 +8,18 @@
 
 
 @section('content')
-<div class="mb-5">
-    <a href="{{ route('categories.create') }}" class="btn btn-lg btn-outline-primary w-25">Create</a>
-</div>
+
+
+    <div class="mb-5">
+        <a href="{{ route('categories.create') }}" class="btn btn-lg btn-outline-primary w-25">Create</a>
+    </div>
+{{-- (session()->has('success')) --}}
+    @if (session('msg'))
+        <div class="alert alert-{{ session('type') }}">
+            {{ session('msg') }}
+            {{-- {{ session('success') }} --}}
+        </div>
+    @endif
     <form action="{{ route('categories.index') }}" method="get">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Search here..." name="category"
@@ -38,16 +47,15 @@
                         <td>{{ $category->id }}</td>
                         <td>{{ $category->name }}</td>
                         <td>{{ $category->parent_id }}</td>
-                        <td>{{ $category->created_at ? $category->diffForHumans() : '' }}</td>
+                        <td>{{ $category->created_at ? $category->created_at->diffForHumans() : '' }}</td>
                         <td>
-                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-outline-succes"><i
+                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-primary"><i
                                     class="fa fa-edit"></i>edit</a>
-                        </td>
-                        <td>
+                            {{-- confirm delte --}}
                             <button class="btn btn-sm btn-outline-danger btn-delete">
                                 <i class="fas fa-trash"></i> Delete
                             </button>
-                            <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
+                            <form class="d-line" action="{{ route('categories.destroy', $category->id) }}" method="POST">
                                 @csrf
                                 <!-- Form Method Spoofing  -->
                                 <input type="hidden" name="_method" value="delete">
@@ -64,7 +72,7 @@
         </tbody>
     </table>
 
-   {{-- {{ $categories->appends($_GET)->links() }} --}}
+    {{-- {{ $categories->appends($_GET)->links() }} --}}
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>

@@ -18,8 +18,8 @@
         </div>
         <div class="form-group">
             <label for="">Category Parent</label>
-            <select name="parebt_id" class="form-control  form-select">
-                <option value="">Select Category</option>
+            <select name="parent_id" class="form-control form-select">
+                <option value="">Primary Category</option>
                 @foreach ($parents as $parent)
                     <option value="{{ $parent->id }}">{{ $parent->name }}</option>
                 @endforeach
@@ -27,7 +27,7 @@
         </div>
         <div class="form-group">
             <label for="">Description</label>
-            <textarea  name="description" class="myeditor" rows="10"></textarea>
+            <textarea name="description" class="myeditor" rows="10"></textarea>
         </div>
         <div class="form-group">
             <label for="">Image</label>
@@ -37,19 +37,21 @@
             <label for="">Status</label>
             <div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="status"  value="active"
-                        checked>
+                    <input class="form-check-input" type="radio" name="status" value="active" checked>
                     <label class="form-check-label">
                         Action
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="status"  value="archived">
+                    <input class="form-check-input" type="radio" name="status" value="archived">
                     <label class="form-check-label">
                         Archived
                     </label>
                 </div>
             </div>
+
+
+
         </div>
         <button type="submit" class="btn btn-success px-5 mb-5">Add</button>
     </form>
