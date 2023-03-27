@@ -64,6 +64,7 @@ class CategoriesController extends Controller
     public function show(string $id)
     {
         //
+
     }
 
     /**
@@ -72,6 +73,10 @@ class CategoriesController extends Controller
     public function edit(string $id)
     {
         //
+        $category = Category::findOrFail($id);
+        // Select * From categories Where id <> id
+        $parents = Category::where('id' , '<>' , $id)->get();
+        return view('admin.categories.edit', compact('category' , 'parents'));
     }
 
     /**
@@ -80,6 +85,12 @@ class CategoriesController extends Controller
     public function update(Request $request, string $id)
     {
         //
+
+        $category = Category::find($id);
+        $category->update($request->all());
+        //$category->fill($request->all())->save();
+        return Redirect::route('categories.index')->with('msg', 'Category update successfully!')->with('type', 'info');
+
     }
 
     /**
