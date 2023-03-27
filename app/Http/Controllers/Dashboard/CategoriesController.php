@@ -73,6 +73,11 @@ class CategoriesController extends Controller
     public function edit(string $id)
     {
         //
+        // try{
+        //     $category = Category::findOrFail($id);
+        // }catch (Exception $e{
+        //     abort(404);
+        // }
         $category = Category::findOrFail($id);
         // Select * From categories Where id <> id
         $parents = Category::where('id' , '<>' , $id)->get();
@@ -98,6 +103,9 @@ class CategoriesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        //$category::where('id' , '=' , $id)->delete();
+        $category = Category::findOrFail($id);
+        $category->delete();
+        return redirect()->route('categories.index')->with('msg', 'Category delete successfully')->with('type', 'danger');
     }
 }
