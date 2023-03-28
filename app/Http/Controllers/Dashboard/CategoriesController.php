@@ -79,11 +79,13 @@ class CategoriesController extends Controller
         //     abort(404);
         // }
         $category = Category::findOrFail($id);
-        // Select * From categories Where id <> id
-        $parents = Category::where('id' , '<>' , $id)->get();
+        // Select * From categories Where id <> id And (Parent_id is null OR parent_id <> $id)
+        $parents = Category::where('id' , '<>' , $id)->where(function ($query) use($id){
+            $query->whereNull('parent_id')
+            ->orWhere('parent_id' , '<>' , $id);
+        })->get();
         return view('admin.categories.edit', compact('category' , 'parents'));
     }
-
     /**
      * Update the specified resource in storage.
      */
