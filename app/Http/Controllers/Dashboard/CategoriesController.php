@@ -34,7 +34,9 @@ class CategoriesController extends Controller
     {
         //
         $parents = Category::all();
-        return view('admin.categories.create', compact('parents'));
+        $category = new Category();
+
+        return view('admin.categories.create', compact('parents' , 'category'));
     }
 
     /**
