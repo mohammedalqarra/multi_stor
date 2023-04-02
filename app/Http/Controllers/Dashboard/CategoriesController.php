@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 
 class CategoriesController extends Controller
@@ -21,6 +22,7 @@ class CategoriesController extends Controller
         } else {
             $categories = Category::where('name', 'like', '%' . request()->category . '%')->orderByDesc('id')->paginate(10);
         }
+        
         $categories = Category::all();
 
         return view('admin.categories.index', compact('categories'));
@@ -45,14 +47,32 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         //
-        // $category = new Category( $request->all() );
-        // $category->save();
+
         //Request merge
         $request->merge([
             'slug' => Str::slug($request->post('name'))
         ]);
+
+        $data  = $request->except('image');
+
+        if($request->hasFile('image')){
+            $file = $request->file('image'); // UploadedFile object
+            $path = $file->store('uploads', [
+                'disk' => 'public'
+            ]);
+
+            $data['image']  = $path;
+        }
+
+        $category = Category::create( $data );
+
+        // $category = new Category( $request->all() );
+        // $category->save();
+
         //Mass assignment
-        $category = Category::create($request->all());
+        // $category = Category::create($request->all());
+
+
 
         //PRG
         //  return redirect()->route('categories.index');
@@ -94,9 +114,28 @@ class CategoriesController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $category = Category::findOrFail($id);
 
-        $category = Category::find($id);
-        $category->update($request->all());
+        $data  = $request->except('image');
+        $old_image = $category->image;
+
+        if($request->hasFile('image')){
+            $file = $request->file('image'); // UploadedFile object
+            $path = $file->store('uploads', [
+                'disk' => 'public'
+            ]);
+
+            $data['image']  = $path;
+        }
+
+      //  $category = Category::find($id);
+
+        // $category->update($request->all());
+        if($old_image && isset($data['image'])){
+            Storage::disk('public')->delete($old_image);
+        }
+
+        $category->update( $data );
         //$category->fill($request->all())->save();
         return Redirect::route('categories.index')->with('msg', 'Category update successfully!')->with('type', 'info');
 
