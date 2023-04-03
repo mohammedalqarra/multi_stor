@@ -22,7 +22,7 @@ class CategoriesController extends Controller
         } else {
             $categories = Category::where('name', 'like', '%' . request()->category . '%')->orderByDesc('id')->paginate(10);
         }
-        
+
         $categories = Category::all();
 
         return view('admin.categories.index', compact('categories'));
@@ -57,8 +57,10 @@ class CategoriesController extends Controller
 
         if($request->hasFile('image')){
             $file = $request->file('image'); // UploadedFile object
-            $path = $file->store('uploads', [
-                'disk' => 'public'
+            $path = $file->store('uploads ', [
+           // $path = $file->store('categories', [
+                 'disk' => 'public'
+               // 'disk'  => 'uploads'
             ]);
 
             $data['image']  = $path;
@@ -114,17 +116,18 @@ class CategoriesController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $category = Category::findOrFail($id);
 
-        $data  = $request->except('image');
+        $category = Category::findOrFail($id);
         $old_image = $category->image;
+        $data  = $request->except('image');
+
 
         if($request->hasFile('image')){
             $file = $request->file('image'); // UploadedFile object
             $path = $file->store('uploads', [
                 'disk' => 'public'
             ]);
-
+            dd($path);
             $data['image']  = $path;
         }
 
@@ -132,7 +135,7 @@ class CategoriesController extends Controller
 
         // $category->update($request->all());
         if($old_image && isset($data['image'])){
-            Storage::disk('public')->delete($old_image);
+            Storage::disk('public')->delete($old_image); // name disk because use delete
         }
 
         $category->update( $data );
