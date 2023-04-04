@@ -54,17 +54,8 @@ class CategoriesController extends Controller
         ]);
 
         $data  = $request->except('image');
+        $data['image']  = $this->uploadImage($request);
 
-        if($request->hasFile('image')){
-            $file = $request->file('image'); // UploadedFile object
-            $path = $file->store('uploads ', [
-           // $path = $file->store('categories', [
-                 'disk' => 'public'
-               // 'disk'  => 'uploads'
-            ]);
-
-            $data['image']  = $path;
-        }
 
         $category = Category::create( $data );
 
@@ -120,25 +111,12 @@ class CategoriesController extends Controller
         $category = Category::findOrFail($id);
         $old_image = $category->image;
         $data  = $request->except('image');
-
-
-        if($request->hasFile('image')){
-            $file = $request->file('image'); // UploadedFile object
-            // $file->getClientOriginalName();
-            // $file->getSize();
-            // $file->getClientOriginalExtension();
-            // $file->getMimeType(); // png,jpg
-            $path = $file->store('uploads', [
-                'disk' => 'public'
-            ]);
-
-            $data['image']  = $path;
-        }
+        $data['image'] = $this->uploadImage($request);
 
       //  $category = Category::find($id);
 
         // $category->update($request->all());
-        if($old_image && isset($data['image'])){
+        if($old_image && $data['image']){
             Storage::disk('public')->delete($old_image); // name disk because use delete
         }
 
@@ -161,5 +139,24 @@ class CategoriesController extends Controller
             Storage::disk('public')->delete($category->image);
         }
         return redirect()->route('categories.index')->with('msg', 'Category delete successfully')->with('type', 'danger');
+    }
+
+
+    protected function uploadImage(Request $request){
+        if(!$request->hasFile('image')){
+            return;
+        }
+
+            $file = $request->file('image'); // UploadedFile object
+            // $file->getClientOriginalName();
+            // $file->getSize();
+            // $file->getClientOriginalExtension();
+            // $file->getMimeType(); // png,jpg
+            $path = $file->store('uploads', [
+                'disk' => 'public'
+            ]);
+
+            return  $path;
+
     }
 }
