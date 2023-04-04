@@ -36,14 +36,14 @@
                 <th>Parent</th>
                 <th>Create At</th>
                 <th>Actions</th>
-                <th colspan="2"></th>
+                {{-- <th colspan="2"></th> --}}
             </tr>
         </thead>
         <tbody>
             @if ($categories->count() > 0)
                 @foreach ($categories as $category)
                     <tr>
-                        <td> <img src="{{ asset($category->image) }}" alt="50"> </td>
+                        <td><img src="{{ asset('storage/'.$category->image) }}" class="w-25" alt="50"></td>
                         <td>{{ $category->id }}</td>
                         <td>{{ $category->name }}</td>
                         <td>{{ $category->parent_id }}</td>
