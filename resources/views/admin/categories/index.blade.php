@@ -30,9 +30,9 @@
     <table class="table table-bordered">
         <thead>
             <tr class="bg-dark text-white">
-                <th></th>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Image</th>
                 <th>Parent</th>
                 <th>Create At</th>
                 <th>Actions</th>
@@ -43,9 +43,9 @@
             @if ($categories->count() > 0)
                 @foreach ($categories as $category)
                     <tr>
-                        <td><img src="{{ asset('storage/'.$category->image) }}" class="w-25" alt="50"></td>
                         <td>{{ $category->id }}</td>
                         <td>{{ $category->name }}</td>
+                        <td> <img  width="80" src="{{ asset('storage/'.$category->image) }}" alt="50"></td>
                         <td>{{ $category->parent_id }}</td>
                         <td>{{ $category->created_at ? $category->created_at->diffForHumans() : '' }}</td>
                         <td>
@@ -72,7 +72,7 @@
         </tbody>
     </table>
 
-    {{-- {{ $categories->appends($_GET)->links() }} --}}
+        {{-- {{ $categories->appends($_GET)->links() }} --}}
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>

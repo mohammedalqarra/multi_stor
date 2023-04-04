@@ -45,3 +45,4 @@
 
 
 </div>
+<button type="submit" class="btn btn-success px-5 mb-5">{{ $button_label ?? 'Save' }}</button>

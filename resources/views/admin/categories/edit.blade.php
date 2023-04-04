@@ -15,13 +15,15 @@
 @include('admin.errors')
 
 @section('content')
+<form action="{{ route('categories.update', $category-> id) }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    @method('PUT')
+    @include('admin.categories._form' , [
+        'button_label' => 'Update',
+    ])
 
-    <form action="{{ route('categories.update', $category-> id) }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
-        @include('admin.categories._form')
-        <button type="submit" class="btn btn-success px-5 mb-5">Update</button>
-    </form>
+</form>
+
 
 @section('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.3.1/tinymce.min.js"

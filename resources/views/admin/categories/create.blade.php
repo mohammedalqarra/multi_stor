@@ -12,8 +12,9 @@
 
     <form action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @include('admin.categories._form')
-        <button type="submit" class="btn btn-success px-5 mb-5">Add</button>
+        @include('admin.categories._form' , [
+            'button_label' => 'Add'
+        ])
     </form>
 
 @section('scripts')
