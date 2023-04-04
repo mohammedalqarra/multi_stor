@@ -127,7 +127,7 @@ class CategoriesController extends Controller
             $path = $file->store('uploads', [
                 'disk' => 'public'
             ]);
-            dd($path);
+
             $data['image']  = $path;
         }
 
@@ -152,6 +152,10 @@ class CategoriesController extends Controller
         //$category::where('id' , '=' , $id)->delete();
         $category = Category::findOrFail($id);
         $category->delete();
+
+        if($category->image){
+            Storage::disk('public')->delete($category->image);
+        }
         return redirect()->route('categories.index')->with('msg', 'Category delete successfully')->with('type', 'danger');
     }
 }
