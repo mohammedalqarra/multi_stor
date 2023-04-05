@@ -1,3 +1,6 @@
+
+    @include('admin.errors')
+
 <div class="form-group">
     <label for="">Category name</label>
     <input type="text" name="name" placeholder="name" class="form-control" value="{{ $category->name }}" />

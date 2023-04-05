@@ -12,7 +12,6 @@
     @endif
 @endsection
 
-@include('admin.errors')
 
 @section('content')
 <form action="{{ route('categories.update', $category-> id) }}" method="POST" enctype="multipart/form-data">

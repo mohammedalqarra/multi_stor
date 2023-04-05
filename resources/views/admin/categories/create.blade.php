@@ -6,7 +6,6 @@
     <h1 class="breadcrumb-item active">Create new Categories</h1>
 @endsection
 
-@include('admin.errors')
 
 @section('content')
 

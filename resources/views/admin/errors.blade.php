@@ -1,7 +1,8 @@
 @if ($errors->any())
 <div class="alert alert-danger">
+    <h3>Error occurred!</h3>
         <ul>
-            @foreach ($erors->all() as $error)
+            @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
         </ul>
