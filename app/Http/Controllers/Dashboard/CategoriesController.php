@@ -50,7 +50,7 @@ class CategoriesController extends Controller
         $request->validate([
             'name' =>  'required|string|min:3|max:255',
             'parent_id' => [
-                'int', 'exists:categories,id'
+                'nullable' , 'int', 'exists:categories,id'
             ],
 
             'image' => [
@@ -59,6 +59,7 @@ class CategoriesController extends Controller
 
             'status' => 'in:active,archived',
         ]);
+
 
         //Request merge
         $request->merge([
