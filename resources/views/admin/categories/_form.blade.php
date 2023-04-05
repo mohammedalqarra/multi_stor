@@ -3,7 +3,12 @@
 
 <div class="form-group">
     <label for="">Category name</label>
-    <input type="text" name="name" placeholder="name" class="form-control @error('name') is-invalid @enderror"  value="{{ $category->name }}" />
+    {{-- <input type="text" name="name" placeholder="name" class="form-control @error('name') is-invalid @enderror"  value="{{ $category->name }}" /> --}}
+    <input type="text" name="name" placeholder="name" @class([
+        'form-control',
+        'is-invalid' => $errors->has('name'),
+    ]) value="{{ old('name' , $category->name ) }}" />
+
     @error('name')
     <div class="invalid-feedback">
         {{ $message }}
@@ -15,7 +20,7 @@
     <select name="parent_id" class="form-control form-select">
         <option value="">Primary Category</option>
         @foreach ($parents as $parent)
-            <option value="{{ $parent->id }}" @selected($category->parent_id ==
+            <option value="{{ $parent->id }}" @selected( old('parent_id' , $category->parent_id) ==
                 $parent->id)>{{ $parent->name }}</option>
         @endforeach
     </select>
@@ -23,7 +28,7 @@
 </div>
 <div class="form-group">
     <label for="">Description</label>
-    <textarea name="description" class="myeditor" rows="10">{{ $category->description }}</textarea>
+    <textarea name="description" class="myeditor" rows="10">{{ old('description' , $category->description) }}</textarea>
 </div>
 <div class="form-group">
     <label for="">Image</label>
@@ -37,14 +42,14 @@
     <div>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="status" value="active"
-                @checked($category->status == 'active')>
+                @checked(old('status', $category->status)) == 'active')>
             <label class="form-check-label">
                 Action
             </label>
         </div>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="status" value="archived"
-                @checked($category->status == 'archived')>
+                @checked( old('status', $category->status)) == 'archived')>
             <label class="form-check-label">
                 Archived
             </label>
