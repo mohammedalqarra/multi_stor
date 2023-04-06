@@ -38,7 +38,7 @@ class CategoriesController extends Controller
         $parents = Category::all();
         $category = new Category();
 
-        return view('admin.categories.create', compact('parents' , 'category'));
+        return view('admin.categories.create', compact('parents', 'category'));
     }
 
     /**
@@ -47,19 +47,7 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         //
-        $request->validate([
-            'name' =>  'required|string|min:3|max:255',
-            'parent_id' => [
-                'nullable' , 'int', 'exists:categories,id'
-            ],
-
-            'image' => [
-                'image' , 'max:1048576' , 'dimensions:min_width=100,min_height=100',
-            ],
-
-            'status' => 'in:active,archived',
-        ]);
-
+        $request->validate(Category::rules());
 
         //Request merge
         $request->merge([
@@ -70,7 +58,7 @@ class CategoriesController extends Controller
         $data['image']  = $this->uploadImage($request);
 
 
-        $category = Category::create( $data );
+        $category = Category::create($data);
 
         // $category = new Category( $request->all() );
         // $category->save();
@@ -108,11 +96,11 @@ class CategoriesController extends Controller
         // }
         $category = Category::findOrFail($id);
         // Select * From categories Where id <> id And (Parent_id is null OR parent_id <> $id)
-        $parents = Category::where('id' , '<>' , $id)->where(function ($query) use($id){
+        $parents = Category::where('id', '<>', $id)->where(function ($query) use ($id) {
             $query->whereNull('parent_id')
-            ->orWhere('parent_id' , '<>' , $id);
+                ->orWhere('parent_id', '<>', $id);
         })->get();
-        return view('admin.categories.edit', compact('category' , 'parents'));
+        return view('admin.categories.edit', compact('category', 'parents'));
     }
     /**
      * Update the specified resource in storage.
@@ -120,23 +108,26 @@ class CategoriesController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $request->validate(Category::rules($id));
 
         $category = Category::findOrFail($id);
         $old_image = $category->image;
         $data  = $request->except('image');
-        $data['image'] = $this->uploadImage($request);
+        $new_image = $this->uploadImage($request);
 
-      //  $category = Category::find($id);
+        if($new_image){
+            $data['image'] = $new_image;
+        }
+        //  $category = Category::find($id);
 
         // $category->update($request->all());
-        if($old_image && $data['image']){
+        if ($old_image && $new_image) {
             Storage::disk('public')->delete($old_image); // name disk because use delete
         }
 
-        $category->update( $data );
+        $category->update($data);
         //$category->fill($request->all())->save();
         return Redirect::route('categories.index')->with('msg', 'Category update successfully!')->with('type', 'info');
-
     }
 
     /**
@@ -148,28 +139,28 @@ class CategoriesController extends Controller
         $category = Category::findOrFail($id);
         $category->delete();
 
-        if($category->image){
+        if ($category->image) {
             Storage::disk('public')->delete($category->image);
         }
         return redirect()->route('categories.index')->with('msg', 'Category delete successfully')->with('type', 'danger');
     }
 
 
-    protected function uploadImage(Request $request){
-        if(!$request->hasFile('image')){
+    protected function uploadImage(Request $request)
+    {
+        if (!$request->hasFile('image')) {
             return;
         }
 
-            $file = $request->file('image'); // UploadedFile object
-            // $file->getClientOriginalName();
-            // $file->getSize();
-            // $file->getClientOriginalExtension();
-            // $file->getMimeType(); // png,jpg
-            $path = $file->store('uploads', [
-                'disk' => 'public'
-            ]);
+        $file = $request->file('image'); // UploadedFile object
+        // $file->getClientOriginalName();
+        // $file->getSize();
+        // $file->getClientOriginalExtension();
+        // $file->getMimeType(); // png,jpg
+        $path = $file->store('uploads', [
+            'disk' => 'public'
+        ]);
 
-            return  $path;
-
+        return  $path;
     }
 }
