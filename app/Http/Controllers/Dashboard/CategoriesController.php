@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 
@@ -47,7 +48,10 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         //
-        $request->validate(Category::rules());
+       $clena_data = $request->validate(Category::rules(), [ // ترجع ال data بعد فحصها
+            'required'  => 'This Field (:attribute) is required',
+            'name.unique' => 'This is name already exists!' // customization message
+        ]);
 
         //Request merge
         $request->merge([
@@ -105,10 +109,10 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CategoryRequest $request, string $id)
     {
         //
-        $request->validate(Category::rules($id));
+      //  $request->validate(Category::rules($id));
 
         $category = Category::findOrFail($id);
         $old_image = $category->image;
