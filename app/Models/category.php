@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+
+
+use App\Rules\Filter;
 use Illuminate\Validation\Rule;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model
 {
@@ -27,11 +30,14 @@ class Category extends Model
                 'min:3',
                 'max:255',
                 Rule::unique('categories', 'name')->ignore($id),
-                function($attribute , $value , $fails) {
-                    if(strtolower($value) == 'laravel'){
-                        $fails('This name is forbidden!');
+
+                /*  function($attribute , $value , $fails) {
+                     if(strtolower($value) == 'laravel'){
+                       $fails('This name is forbidden!');
                     }
-                }
+                 },*/
+                 'filter:laravel,php,html',
+                // new Filter(['laravel' , 'php' , 'html']),
             ],
             'parent_id' => [
                 'nullable', 'int', 'exists:categories,id'
