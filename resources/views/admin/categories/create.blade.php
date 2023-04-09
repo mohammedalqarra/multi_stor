@@ -8,7 +8,6 @@
 
 
 @section('content')
-
     <form action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @include('admin.categories._form' , [

@@ -14,12 +14,16 @@
         <a href="{{ route('categories.create') }}" class="btn btn-lg btn-outline-primary w-25">Create</a>
     </div>
 {{-- (session()->has('success')) --}}
-    @if (session('msg'))
+    {{-- @if (session('msg'))
         <div class="alert alert-{{ session('type') }}">
             {{ session('msg') }}
-            {{-- {{ session('success') }} --}}
+            {{-- {{ session('success') }}
         </div>
-    @endif
+    @endif --}}
+
+    <x-alert type="success"/>
+    <x-alert type="info"/>
+    <x-alert type="danger"/>
     <form action="{{ route('categories.index') }}" method="get">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Search here..." name="category"

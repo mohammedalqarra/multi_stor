@@ -5,11 +5,12 @@
 @section('breadcrumb')
     <h1 class="breadcrumb-item active">Edit Categories</h1>
 
-    @if (session('msg'))
+    {{-- @if (session('msg'))
         <div class="alert alert-{{ seesion('type') }}">
             {{ seesion('msg') }}
         </div>
-    @endif
+    @endif --}}
+    
 @endsection
 
 
