@@ -29,8 +29,8 @@
     <x-form.textarea name="description" label="Description" class="myeditor" rows="10" :value="$category->description" />
 </div>
 <div class="form-group">
-
-    <x-form.input label="Image" type="file" id="image" name="image" class="form-control" accept="image/*" />
+    <x-form.label id="image">Image</x-form.label>
+    <x-form.input  type="file" id="image" name="image" class="form-control" accept="image/*" />
     @if ($category->image)
         <img src="{{ asset('storage/' . $category->image) }}" class="w-25" alt="50">
     @endif
