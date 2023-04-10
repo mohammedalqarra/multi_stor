@@ -14,7 +14,7 @@
         {{ $message }}
     </div>
     @enderror --}}
-    <x-form.input name="name"  value="$category->name"/>
+    <x-form.input name="name"  :value="$category->name"/>
 </div>
 <div class="form-group">
     <label for="">Category Parent</label>
