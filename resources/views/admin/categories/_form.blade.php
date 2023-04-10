@@ -2,7 +2,7 @@
     @include('admin.errors')
 
 <div class="form-group">
-    <label for="">Category name</label>
+
     {{-- <input type="text" name="name" placeholder="name" class="form-control @error('name') is-invalid @enderror"  value="{{ $category->name }}" /> --}}
     {{-- <input type="text" name="name" placeholder="name" @class([
         'form-control',
@@ -14,7 +14,7 @@
         {{ $message }}
     </div>
     @enderror --}}
-    <x-form.input name="name"  :value="$category->name"/>
+    <x-form.input label="Category Name" name="name" class="form-control-lg" role="input" :value="$category->name"/>
 </div>
 <div class="form-group">
     <label for="">Category Parent</label>
