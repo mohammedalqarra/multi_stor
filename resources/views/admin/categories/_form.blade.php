@@ -13,6 +13,8 @@
         {{ $message }}
     </div>
     @enderror --}}
+
+
     <x-form.input label="Category Name" name="name" class="form-control-lg" role="input" :value="$category->name" />
 </div>
 <div class="form-group">
@@ -36,9 +38,12 @@
     @endif
 </div>
 <div class="form-group">
-    <label for="">Status</label>
-    <div>
-        <div class="form-check">
+    {{-- <label for="">Status</label> --}}
+
+
+        <x-form.radio label="Status" name="status" :checked="$category->status" :options="['active' => 'Active' , 'archived' => 'Archived']" />
+            <div>
+        {{-- <div class="form-check">
             <input class="form-check-input" type="radio" name="status" value="active"
                 @checked(old('status', $category->status)) =='active' )>
             <label class="form-check-label">
@@ -51,7 +56,7 @@
             <label class="form-check-label">
                 Archived
             </label>
-        </div>
+        </div> --}}
     </div>
 
 
