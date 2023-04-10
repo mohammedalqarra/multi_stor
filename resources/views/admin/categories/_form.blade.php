@@ -4,7 +4,7 @@
 <div class="form-group">
     <label for="">Category name</label>
     {{-- <input type="text" name="name" placeholder="name" class="form-control @error('name') is-invalid @enderror"  value="{{ $category->name }}" /> --}}
-    <input type="text" name="name" placeholder="name" @class([
+    {{-- <input type="text" name="name" placeholder="name" @class([
         'form-control',
         'is-invalid' => $errors->has('name'),
     ]) value="{{ old('name' , $category->name ) }}" />
@@ -13,7 +13,8 @@
     <div class="invalid-feedback">
         {{ $message }}
     </div>
-    @enderror
+    @enderror --}}
+    <x-form.input name="name"  value="$category->name"/>
 </div>
 <div class="form-group">
     <label for="">Category Parent</label>
