@@ -210,7 +210,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div>
                     </div>
                 </div>
-                @include('admin.nav')
+                {{-- @include('admin.nav' , ['active' => 'dashboard']) --}}
+                <x-nav />
             </div>
 
             <!-- /.sidebar -->
