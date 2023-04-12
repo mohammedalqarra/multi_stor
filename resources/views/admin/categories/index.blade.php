@@ -36,7 +36,7 @@
                 <option value="archived" @selected(request('status') == 'archived')>archived</option>
             </select>
 
-            <button class="btn btn-dark mx-5">Search</button>
+            <button class="btn btn-dark px-5">Search</button>
 
 
     </form>
