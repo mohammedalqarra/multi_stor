@@ -86,7 +86,7 @@
             @endif
         </tbody>
     </table>
-    {{-- {{ $categories->links() }} --}}
+    {{-- {{ $categories->withQueryString()->links() }} --}}
 
     {{ $categories->appends($_GET)->links() }}
 
