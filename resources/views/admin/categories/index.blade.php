@@ -13,7 +13,7 @@
     <div class="mb-5">
         <a href="{{ route('categories.create') }}" class="btn btn-lg btn-outline-primary w-25">Create</a>
     </div>
-{{-- (session()->has('success')) --}}
+    {{-- (session()->has('success')) --}}
     {{-- @if (session('msg'))
         <div class="alert alert-{{ session('type') }}">
             {{ session('msg') }}
@@ -21,15 +21,24 @@
         </div>
     @endif --}}
 
-    <x-alert type="success"/>
-    <x-alert type="info"/>
-    <x-alert type="danger"/>
-    <form action="{{ route('categories.index') }}" method="get">
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Search here..." name="category"
+    <x-alert type="success" />
+    <x-alert type="info" />
+    <x-alert type="danger" />
+    <form action="{{ URL::current() }}" method="get" class="d-flex justify-content-between mb-4">
+            {{-- <input type="text" class="form-control" placeholder="Search here..." name="category"
                 value="{{ request()->category }}">
-            <button class="btn btn-dark px-5" id="button-addon2">Search</button>
-        </div>
+            <button class="btn btn-dark px-5" id="button-addon2">Search</button> --}}
+            <x-form.input name="name" placeholder="Search here..." class="mx-2"  :value="request('name')" />
+
+            <select name="status" class="form-control mx-2">
+                <option value="">All</option>
+                <option value="active" @selected(request('status') == 'active')>active</option>
+                <option value="archived" @selected(request('status') == 'archived')>archived</option>
+            </select>
+
+            <button class="btn btn-dark mx-5">Search</button>
+
+
     </form>
     <table class="table table-bordered">
         <thead>
@@ -38,6 +47,7 @@
                 <th>Name</th>
                 <th>Image</th>
                 <th>Parent</th>
+                <th>Status</th>
                 <th>Create At</th>
                 <th>Actions</th>
                 {{-- <th colspan="2"></th> --}}
@@ -49,8 +59,9 @@
                     <tr>
                         <td>{{ $category->id }}</td>
                         <td>{{ $category->name }}</td>
-                        <td> <img  width="80" src="{{ asset('storage/'.$category->image) }}" alt="50"></td>
+                        <td> <img width="80" src="{{ asset('storage/' . $category->image) }}" alt="50"></td>
                         <td>{{ $category->parent_id }}</td>
+                        <td>{{ $category->status }}</td>
                         <td>{{ $category->created_at ? $category->created_at->diffForHumans() : '' }}</td>
                         <td>
                             <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-primary"><i
@@ -75,8 +86,9 @@
             @endif
         </tbody>
     </table>
+    {{-- {{ $categories->links() }} --}}
 
-        {{-- {{ $categories->appends($_GET)->links() }} --}}
+    {{ $categories->appends($_GET)->links() }}
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>

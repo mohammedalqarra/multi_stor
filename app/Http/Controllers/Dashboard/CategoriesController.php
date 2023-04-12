@@ -17,14 +17,20 @@ class CategoriesController extends Controller
      */
     public function index()
     {
+        // helper function
+        $request = request();
 
-        if (request()->has('category')) {
-            $categories = Category::where('name', 'like', '%' . request()->category . '%')->orderBy('id', 'desc')->paginate(10);
-        } else {
-            $categories = Category::where('name', 'like', '%' . request()->category . '%')->orderByDesc('id')->paginate(10);
+        $query = Category::query();
+
+        if($name = $request->query('name')){
+            $query->where('name', 'LIKE' , "%{$name}%");
         }
 
-        $categories = Category::all();
+        if($status = $request->query('status')){
+            $query->where('status', '=' , $status);
+        }
+
+        $categories = $query->paginate(2);
 
         return view('admin.categories.index', compact('categories'));
         //
