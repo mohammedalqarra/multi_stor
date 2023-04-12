@@ -20,18 +20,14 @@ class CategoriesController extends Controller
         // helper function
         $request = request();
 
-        $query = Category::query();
+        // $query = Category::query();
+        // $categories = $query->paginate(2);
 
-        if($name = $request->query('name')){
-            $query->where('name', 'LIKE' , '%'. request()->name . '%');
-        }
 
-        if($status = $request->query('status')){
-            $query->where('status', '=' , $status);
-        }
+        $categories = Category::filter($request->query())->orderByDesc('id')->paginate(2);
 
-        $categories = $query->paginate(2);
-
+       // $categories = Category::active()->paginate(); // scopeActive
+      //  $categories = Category::Status('archived')->active()->paginate(); // scope & parameter
         return view('admin.categories.index', compact('categories'));
         //
     }
