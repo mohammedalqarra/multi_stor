@@ -24,7 +24,7 @@ class CategoriesController extends Controller
         // $categories = $query->paginate(2);
 /*
         SELECT a.* , b.name as parent_name (*)
-        FORm categories as a (aries)
+        FORm categories as a (Arries)
         LEFT JOIN categories as  b ON b.id = a.parent_id
 */
         $categories = Category::leftJoin('categories as parents' , 'parents.id' , '=' , 'categories.parent_id')
@@ -33,6 +33,7 @@ class CategoriesController extends Controller
             'parents.name as parent_name'
         ])
         ->filter($request->query())
+        // ->withTrashed()
         ->orderByDesc('categories.name')
         ->paginate(2);
        // $categories = Category::active()->paginate(); // scopeActive
@@ -154,9 +155,9 @@ class CategoriesController extends Controller
         $category = Category::findOrFail($id);
         $category->delete();
 
-        if ($category->image) {
-            Storage::disk('public')->delete($category->image);
-        }
+        // if ($category->image) {
+        //     Storage::disk('public')->delete($category->image);
+        // }
         return redirect()->route('categories.index')->with('msg', 'Category delete successfully')->with('type', 'danger');
     }
 
