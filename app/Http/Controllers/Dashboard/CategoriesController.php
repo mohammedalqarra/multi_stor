@@ -179,4 +179,30 @@ class CategoriesController extends Controller
 
         return  $path;
     }
+
+    public function trash()
+    {
+        $categories = Category::onlyTrashed()->paginate();
+
+        return view('admin.categories.trash', compact('categories'));
+    }
+
+    public function restore(Request $request, $id)
+    {
+        $category = Category::onlyTrashed()->findOrFail($id);
+        $category->restore();
+
+        return redirect()->route('admin.categories.trash')
+        ->with('success', 'category restored!');
+    }
+
+    public function forceDelete($id)
+    {
+        $category = Category::onlyTrashed()->findOrFail($id);
+        $category->forceDelete();
+
+        return redirect()->route('admin.categories.trash')
+        ->with('success', 'category Delete forever!');
+    }
+
 }
