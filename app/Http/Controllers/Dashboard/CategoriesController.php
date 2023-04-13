@@ -22,10 +22,19 @@ class CategoriesController extends Controller
 
         // $query = Category::query();
         // $categories = $query->paginate(2);
-
-
-        $categories = Category::filter($request->query())->orderByDesc('id')->paginate(2);
-
+/*
+        SELECT a.* , b.name as parent_name (*)
+        FORm categories as a (aries)
+        LEFT JOIN categories as  b ON b.id = a.parent_id
+*/
+        $categories = Category::leftJoin('categories as parents' , 'parents.id' , '=' , 'categories.parent_id')
+        ->select([
+            'categories.*',
+            'parents.name as parent_name'
+        ])
+        ->filter($request->query())
+        ->orderByDesc('categories.name')
+        ->paginate(2);
        // $categories = Category::active()->paginate(); // scopeActive
       //  $categories = Category::Status('archived')->active()->paginate(); // scope & parameter
         return view('admin.categories.index', compact('categories'));

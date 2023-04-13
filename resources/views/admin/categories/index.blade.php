@@ -60,7 +60,7 @@
                         <td>{{ $category->id }}</td>
                         <td>{{ $category->name }}</td>
                         <td> <img width="80" src="{{ asset('storage/' . $category->image) }}" alt="50"></td>
-                        <td>{{ $category->parent_id }}</td>
+                        <td>{{ $category->parent_name }}</td>
                         <td>{{ $category->status }}</td>
                         <td>{{ $category->created_at ? $category->created_at->diffForHumans() : '' }}</td>
                         <td>
