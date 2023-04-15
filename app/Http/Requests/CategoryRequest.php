@@ -33,7 +33,7 @@ class CategoryRequest extends FormRequest
 
     public function messages(){
         return [
-            'name.unique'  => 'This name is already exists',
+        'name.unique'  => 'This name is already exists',
         ];
     }
 }

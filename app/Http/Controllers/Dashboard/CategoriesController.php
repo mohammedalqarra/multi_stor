@@ -185,6 +185,7 @@ class CategoriesController extends Controller
         $categories = Category::onlyTrashed()->paginate();
 
         return view('admin.categories.trash', compact('categories'));
+
     }
 
     public function restore(Request $request, $id)
@@ -192,8 +193,10 @@ class CategoriesController extends Controller
         $category = Category::onlyTrashed()->findOrFail($id);
         $category->restore();
 
-        return redirect()->route('admin.categories.trash')
-        ->with('success', 'category restored!');
+        // return redirect()->route('categories.trash')
+        // ->with('success', 'category restored!');
+        return Redirect::route('categories.trash')->with('msg', 'Category created successfully!')->with('type', 'success');
+
     }
 
     public function forceDelete($id)
@@ -201,7 +204,12 @@ class CategoriesController extends Controller
         $category = Category::onlyTrashed()->findOrFail($id);
         $category->forceDelete();
 
-        return redirect()->route('admin.categories.trash')
+            if($category->image){
+                Storage::disk('public')->delete($category->image);
+            }
+
+
+        return redirect()->route('categories.trash')
         ->with('success', 'category Delete forever!');
     }
 
