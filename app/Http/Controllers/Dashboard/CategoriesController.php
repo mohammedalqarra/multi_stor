@@ -193,9 +193,9 @@ class CategoriesController extends Controller
         $category = Category::onlyTrashed()->findOrFail($id);
         $category->restore();
 
-        // return redirect()->route('categories.trash')
-        // ->with('success', 'category restored!');
-        return Redirect::route('categories.trash')->with('msg', 'Category created successfully!')->with('type', 'success');
+        return redirect()->route('categories.trash')
+        ->with('success', 'category restored!');
+        // return Redirect::route('categories.trash')->with('msg', 'Category created successfully!')->with('type', 'success');
 
     }
 
