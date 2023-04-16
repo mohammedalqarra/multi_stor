@@ -9,7 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->json('options')->nullable();
             $table->float('rating')->default(0);
             $table->boolean('featured')->default(0);
-            $table->enum('status' , ['active', 'draft' , 'archived'])->default(['active']);
+            $table->enum('status', ['active', 'draft', 'archvied'])->default('active');
             $table->timestamps();
             $table->softDeletes();
         });
