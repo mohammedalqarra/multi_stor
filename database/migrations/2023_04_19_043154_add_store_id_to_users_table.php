@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
+            $table->foreignId('store_id')->nullable()
+            ->after('phone_number')
+            ->constrained('stores')
+            ->nullOnDelete();
         });
     }
 
@@ -23,6 +27,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
+            $table->dropConstrainedForeignId('store_id');
         });
     }
 };
