@@ -10,11 +10,11 @@
 @section('content')
 
 
-    {{-- <div class="mb-5">
+   <div class="mb-5">
         <a href="{{ route('products.create') }}" class="btn btn-lg btn-outline-primary w-25">Create</a>
-        <a href="{{ route('products.trash') }}" class="btn btn-lg btn-outline-dark w-25">Trash</a>
+        {{-- <a href="{{ route('products.trash') }}" class="btn btn-lg btn-outline-dark w-25">Trash</a> --}}
 
-    </div> --}}
+    </div>
 
     <x-alert type="success" />
     <x-alert type="info" />
@@ -38,7 +38,8 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Image</th>
-                <th>Parent</th>
+                <th>Category</th>
+                <th>Store</th>
                 <th>Status</th>
                 <th>Create At</th>
                 <th>Actions</th>
@@ -52,7 +53,8 @@
                         <td>{{ $product->id }}</td>
                         <td>{{ $product->name }}</td>
                         <td> <img width="80" src="{{ asset('storage/' . $product->image) }}" alt="50"></td>
-                        <td>{{ $product->parent_name }}</td>
+                        <td>{{ $product->category_id }}</td>
+                        <td>{{ $product->store_id }}</td>
                         <td>{{ $product->status }}</td>
                         <td>{{ $product->created_at ? $product->created_at->diffForHumans() : '' }}</td>
                         <td>
