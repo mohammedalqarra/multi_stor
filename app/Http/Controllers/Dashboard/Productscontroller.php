@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller
 {
@@ -13,11 +14,19 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        //
-
+        //2
+        // $user = Auth::user();
+        // if($user->store_id){
+        //     $products = Product::where('store_id', '=' , $user->store_id)->paginate();
+        // }else {
+        //     $products = Product::paginate();
+        // }
+        //1
+        // $products = Product::paginate(15);
+        //3
+        //  $products = Product::withoutGlobalScope('store')->paginate();
         $products = Product::paginate();
-
-        return view('admin.products.index' , compact('products'));
+        return view('admin.products.index', compact('products'));
     }
 
     /**
@@ -50,6 +59,13 @@ class ProductsController extends Controller
     public function edit(string $id)
     {
         //
+        // $user = Auth::user();
+        // if($user->store_id){
+        //     $products = Product::where('store_id', '=' , $user->store_id)->findOrFail($id);
+        // }else {
+        //     $products = Product::findOrFail($id);
+        // }
+        $products = Product::findOrFail($id);
     }
 
     /**
