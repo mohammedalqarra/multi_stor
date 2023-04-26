@@ -25,6 +25,7 @@ class ProductsController extends Controller
         // $products = Product::paginate(15);
         //3
         //  $products = Product::withoutGlobalScope('store')->paginate();
+
         $products = Product::paginate();
         return view('admin.products.index', compact('products'));
     }
