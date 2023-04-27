@@ -17,6 +17,7 @@ class Profile extends Model
         'street_address' , 'city' , 'state' , 'postal_code' ,  'country' ,
         'locale'
     ];
+    
     protected $primaryKey= 'user_id';
 
     public function user()
