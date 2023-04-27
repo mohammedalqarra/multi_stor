@@ -19,6 +19,11 @@ class Category extends Model
         'name', 'parent_id', 'description', 'image', 'status', 'slug'
     ];
 
+    public function products()
+    {
+        return $this->hasMany(Product::class , 'category_id' , 'id');
+    }
+
     //protected $guarded= [];
 
     public function scopeActive(Builder $builder){
