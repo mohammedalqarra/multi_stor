@@ -27,15 +27,16 @@ class CategoriesController extends Controller
         FORm categories as a (Arries)
         LEFT JOIN categories as  b ON b.id = a.parent_id
 */
-        $categories = Category::leftJoin('categories as parents' , 'parents.id' , '=' , 'categories.parent_id')
+        $categories = Category::with('parent')
+        /*leftJoin('categories as parents' , 'parents.id' , '=' , 'categories.parent_id')
         ->select([
             'categories.*',
             'parents.name as parent_name'
-        ])
+        ])*/
         ->filter($request->query())
         // ->withTrashed()
         ->orderByDesc('categories.name')
-        ->paginate(2);
+        ->paginate(15);
        // $categories = Category::active()->paginate(); // scopeActive
       //  $categories = Category::Status('archived')->active()->paginate(); // scope & parameter
         return view('admin.categories.index', compact('categories'));

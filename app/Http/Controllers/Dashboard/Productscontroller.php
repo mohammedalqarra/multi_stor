@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -26,8 +27,7 @@ class ProductsController extends Controller
         //3
         //  $products = Product::withoutGlobalScope('store')->paginate();
 
-        $products = Product::paginate();
-        
+        $products = Product::with(['category', 'store'])->paginate();
         return view('admin.products.index', compact('products'));
     }
 
