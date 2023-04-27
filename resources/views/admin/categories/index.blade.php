@@ -49,6 +49,7 @@
                 <th>Name</th>
                 <th>Image</th>
                 <th>Parent</th>
+                <th>Products #</th>
                 <th>Status</th>
                 <th>Create At</th>
                 <th>Actions</th>
@@ -64,6 +65,7 @@
                         <td> <img width="80" src="{{ asset('storage/' . $category->image) }}" alt="50"></td>
                         {{-- <td>{{ $category->parent_name }}</td> --}}
                         <td>{{ $category->parent->name}}</td>
+                        <td>{{ $category->products_number }}</td>
                         <td>{{ $category->status }}</td>
                         <td>{{ $category->created_at ? $category->created_at->diffForHumans() : '' }}</td>
                         <td>
@@ -84,7 +86,7 @@
                 @endforeach
             @else
                 <tr>
-                    <td colspan="7">No categories defined</td>
+                    <td colspan="9">No categories defined</td>
                 </tr>
             @endif
         </tbody>
