@@ -41,7 +41,7 @@ class CategoriesController extends Controller
             // ->addSelect(DB::raw('(SELECT COUNT(*) FROM products WHERE category_id = category.id) as product_count'))
             ->withCount([
                 'products as products_number' => function($query){
-                $query->where('status' , '=' ,'active');
+                $query->where('status' , '=' , 'active');
             }])
             ->filter($request->query())
             // ->withTrashed()
