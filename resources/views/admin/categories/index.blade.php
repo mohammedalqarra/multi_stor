@@ -61,7 +61,7 @@
                 @foreach ($categories as $category)
                     <tr>
                         <td>{{ $category->id }}</td>
-                        <td>{{ $category->name }}</td>
+                        <td> <a href="{{ route('categories.show' , $category->id) }}" >{{ $category->name }}</a> </td>
                         <td> <img width="80" src="{{ asset('storage/' . $category->image) }}" alt="50"></td>
                         {{-- <td>{{ $category->parent_name }}</td> --}}
                         <td>{{ $category->parent->name}}</td>
