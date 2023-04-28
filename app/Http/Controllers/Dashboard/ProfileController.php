@@ -34,7 +34,7 @@ class ProfileController extends Controller
         $user->profile->fill($request->all())->save();
 
         return redirect()->route('admin.profile.edit')->with('success' , 'Profile update!');
-        
+
         // $user = $request->user();
 
         // $profile  = $user->profile;
