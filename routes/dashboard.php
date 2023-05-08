@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\dashboardController;
 use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\Dashboard\ProductsController;
+use App\Http\Controllers\ProfileController;
 
 Route::group([
     'middleware' => ['auth'],
@@ -19,5 +20,9 @@ Route::group([
     Route::resource('/categories', CategoriesController::class);
 
     Route::resource('/products', ProductsController::class);
+    
+    Route::get('profile' , [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('profile' , [ProfileController::class, 'update'])->name('profile.update');
+
 
 });
