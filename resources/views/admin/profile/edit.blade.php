@@ -12,7 +12,7 @@
 @section('content')
     <x-alert type="success" />
 
-    <form action="{{ route('admin.profile.update') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('patch')
 
@@ -29,7 +29,7 @@
                 <x-form.input name="birthday" type="date" label="Birthday" :value="$user->profile->birthday" />
             </div>
             <div class="col-md-6">
-                <x-form.radio name="gender" :options="['male' => 'Male', 'female' => 'Female']" label="Gender" :checked="$user->profile->gender">
+                <x-form.radio name="gender" :options="['male' => 'Male', 'female' => 'Female']" label="Gender" :checked="$user->profile->gender" />
             </div>
         </div>
         <div class="form-row">

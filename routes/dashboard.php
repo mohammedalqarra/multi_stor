@@ -11,6 +11,10 @@ Route::group([
     'prefix'  => 'dashboard',
 ], function () {
 
+    Route::get('profile' , [ProfileController::class , 'edit'])->name('profile.edit');
+    Route::patch('profile' , [ProfileController::class, 'update'])->name('profile.update');
+
+    
     Route::get('/', [dashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/categories/trash' , [CategoriesController::class, 'trash'])->name('categories.trash');
@@ -21,8 +25,6 @@ Route::group([
 
     Route::resource('/products', ProductsController::class);
 
-    Route::get('profile' , [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::get('profile' , [ProfileController::class, 'update'])->name('profile.update');
 
 
 });

@@ -6,6 +6,8 @@ use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\Intl\Countries;
+use Symfony\Component\Intl\Languages;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -16,8 +18,10 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
+        return view('admin.profile.edit', [
             'user' => $request->user(),
+            'countries' => Countries::getNames('ar'),
+            'locales'  => Languages::getNames('ar'),
         ]);
     }
 
