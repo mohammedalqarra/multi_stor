@@ -20,7 +20,7 @@ Route::group([
     Route::resource('/categories', CategoriesController::class);
 
     Route::resource('/products', ProductsController::class);
-    
+
     Route::get('profile' , [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('profile' , [ProfileController::class, 'update'])->name('profile.update');
 
