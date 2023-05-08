@@ -12,7 +12,7 @@
 
 
 @if (session()->has($type))
-    <div class="aler alert-{{ $type }}">
+    <div class="alert alert-{{ $type }}">
         {{ session($type) }}
     </div>
 @endif

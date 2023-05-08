@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Dashboard;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\Intl\Countries;
+use Symfony\Component\Intl\Languages;
 
 class ProfileController extends Controller
 {
@@ -13,8 +15,10 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        return view('admin.profile.edit' , [
-            'user' =>  $user,
+        return view('admin.profile.edit', [
+            'user' => $user,
+            'countries' => Countries::getNames(),
+            'locales'  => Languages::getNames(),
         ]);
     }
 
@@ -32,7 +36,7 @@ class ProfileController extends Controller
 
         $user->profile->fill($request->all())->save();
 
-        return redirect()->route('admin.profile.edit')->with('success' , 'Profile update!');
+        return redirect()->route('profile.edit')->with('success' , 'Profile update!');
 
         // $user = $request->user();
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\dashboardController;
 use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\Dashboard\ProductsController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Dashboard\ProfileController;
 
 Route::group([
     'middleware' => ['auth'],
@@ -14,7 +14,7 @@ Route::group([
     Route::get('profile' , [ProfileController::class , 'edit'])->name('profile.edit');
     Route::patch('profile' , [ProfileController::class, 'update'])->name('profile.update');
 
-    
+
     Route::get('/', [dashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/categories/trash' , [CategoriesController::class, 'trash'])->name('categories.trash');
