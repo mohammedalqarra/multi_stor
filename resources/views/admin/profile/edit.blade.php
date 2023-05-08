@@ -4,7 +4,7 @@
 
 @section('breadcrumb')
     @parent
-    <h1 class="breadcrumb-item active">Pofile</h1>
+    <h1 class="breadcrumb-item ">Pofile</h1>
     <h1 class="breadcrumb-item active">Edit Profile</h1>
 @endsection
 
@@ -55,7 +55,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary mt-3">Save</button>
 
     </form>
 

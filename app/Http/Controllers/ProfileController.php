@@ -20,8 +20,8 @@ class ProfileController extends Controller
     {
         return view('admin.profile.edit', [
             'user' => $request->user(),
-            'countries' => Countries::getNames('ar'),
-            'locales'  => Languages::getNames('ar'),
+            'countries' => Countries::getNames(),
+            'locales'  => Languages::getNames(),
         ]);
     }
 
