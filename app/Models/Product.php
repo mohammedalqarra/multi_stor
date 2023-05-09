@@ -12,7 +12,10 @@ class Product extends Model
 
     protected $table = 'products';
 
-    protected $guarded= [];
+    protected $fillable= [
+        'name' , 'slug' , 'description' , 'image' , 'category_id' , 'store_id' ,
+        'price' , 'compare_price' , 'status'
+    ];
 
     protected static function booted()
     {
@@ -36,7 +39,7 @@ class Product extends Model
             Tag::class, // Related Model
             'product_tag', // Pivot table name
             'product_id', // FK in pivot table for the current model
-            'tag_tag', // FK in pivot table for the related model
+            'tag_id', // FK in pivot table for the related model
             'id',  // PK current model
             'id'  // PK related model
         );

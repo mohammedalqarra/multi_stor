@@ -71,7 +71,9 @@ class ProductsController extends Controller
         // }
         $product = Product::findOrFail($id);
 
-        return view('admin.products.edit' , compact('product'));
+        $tags = implode(',' , $product->tags()->pluck('name')->toArray());
+
+        return view('admin.products.edit' , compact('product' , 'tags'));
     }
 
     /**
@@ -80,6 +82,29 @@ class ProductsController extends Controller
     public function update(Request $request, product $product)
     {
         //
+
+        $product->update( $request->except('tags') );
+
+        $tags = explode(',' , $request->post('tags'));
+        $tag_ids = [];
+
+        $saved_tag = Tag::all();
+
+        foreach($tags as $t_name){
+            $slug = Str::slug($t_name);
+            $tag = $saved_tag->where('slug' , $slug)->first(); // search collection     
+            if(!$tag){
+                $tag = Tag::create([
+                    'name' => $t_name,
+                    'slug' => $slug,
+                ]);
+            }
+            $tag_ids[] = $tag->id;
+        }
+
+        $product->tags()->sync($tag_ids);
+
+        return redirect()->route('products.index')->with('success' , 'product updated');
     }
 
     /**
