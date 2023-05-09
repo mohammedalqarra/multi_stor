@@ -30,7 +30,7 @@ class Product extends Model
         return $this->belongsTo(Store::class , 'store_id', 'id')->withDefault();
     }
 
-    public function tag()
+    public function tags()
     {
         return $this->belongsToMany(
             Tag::class, // Related Model

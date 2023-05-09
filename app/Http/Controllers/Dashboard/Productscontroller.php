@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Tag;
 use App\Models\Product;
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -67,13 +69,15 @@ class ProductsController extends Controller
         // }else {
         //     $products = Product::findOrFail($id);
         // }
-        $products = Product::findOrFail($id);
+        $product = Product::findOrFail($id);
+
+        return view('admin.products.edit' , compact('product'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, product $product)
     {
         //
     }
