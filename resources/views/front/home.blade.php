@@ -994,7 +994,7 @@
     </x-slot name="breadcrumb">
      </x-slot> --}}
 
-     @section('scripts')
+@section('scripts')
 <script type="text/javascript">
     //========= Hero Slider
     tns({
@@ -1068,7 +1068,6 @@
     setInterval(timer, 1000);
 </script>
 @endsection
-
 
 </x-front-layout>
 
