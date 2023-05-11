@@ -217,7 +217,7 @@
                    @foreach ($products as $product)
                    <div class="col-lg-3 col-md-6 col-12">
                     <!-- Start Single Product -->
-                   <x-product-card :product="$product">  {{--  att --}}
+                   <x-product-card :product="$product" />  {{--  att --}}
                     <!-- End Single Product -->
                     </div>
                    @endforeach
