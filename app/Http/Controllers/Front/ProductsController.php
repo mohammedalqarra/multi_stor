@@ -16,6 +16,12 @@ class ProductsController extends Controller
 
     public function show(Product $product)
     {
+        // dd($product);
 
+        if($product->status != 'active'){
+            abort(404);
+        }
+
+        return view('front.products.show' , compact('product'));
     }
 }
