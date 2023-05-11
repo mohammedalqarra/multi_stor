@@ -6,6 +6,7 @@ use App\Models\Scopes\StoreScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -13,25 +14,25 @@ class Product extends Model
 
     protected $table = 'products';
 
-    protected $fillable= [
-        'name' , 'slug' , 'description' , 'image' , 'category_id' , 'store_id' ,
-        'price' , 'compare_price' , 'status'
+    protected $fillable = [
+        'name', 'slug', 'description', 'image', 'category_id', 'store_id',
+        'price', 'compare_price', 'status'
     ];
 
     protected static function booted()
     {
-        static::addGlobalScope('store' , new StoreScope); // بناء جملة الإرسال
+        static::addGlobalScope('store', new StoreScope); // بناء جملة الإرسال
     }
 
     public function category()
     {
 
-        return $this->belongsTo(Category::class , 'category_id', 'id')->withDefault();
+        return $this->belongsTo(Category::class, 'category_id', 'id')->withDefault();
     }
 
     public function store()
     {
-        return $this->belongsTo(Store::class , 'store_id', 'id')->withDefault();
+        return $this->belongsTo(Store::class, 'store_id', 'id')->withDefault();
     }
 
     public function tags()
@@ -49,5 +50,26 @@ class Product extends Model
     public function scopeActive(Builder $builder)
     {
         $builder->where('status', '=', 'active');
+    }
+
+    // Accessors
+    // $product->image_url
+    public function getImageUrlAttribute()
+    {
+        if (!$this->image) {
+            return 'https://www.incathlab.com/images/products/default_product.png';
+        }
+        if (Str::startsWith($this->image, ['http://', 'https://'])) {
+            return $this->image;
+        }
+        return asset('storage/' . $this->image);
+    }
+
+    public function getSalePercentAttribute()
+    {
+        if(!$this->compare_price){
+            return 0;
+        }
+        return round(100 - (100 * $this->price / $this->compare_price), 1);
     }
 }

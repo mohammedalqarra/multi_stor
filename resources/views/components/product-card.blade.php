@@ -1,6 +1,13 @@
 <div class="single-product">
     <div class="product-image">
-        <img src="{{ asset('storage/' . $product->image) }}" alt="#">
+        {{-- <img src="{{ asset('storage/' . $product->image) }}" alt="#"> --}}
+        <img src="{{ $product->image_url }}" alt="#">
+        @if ($product->sale_percent)
+        <span class="sale-tag">-{{ $product->sale_percent }}%</span>
+        @endif
+        @if ($product->new)
+        <span class="new-tag">New</span>
+        @endif
         <div class="button">
             <a href="product-details.html" class="btn"><i class="lni lni-cart"></i> Add to Cart</a>
         </div>
@@ -20,6 +27,9 @@
         </ul>
         <div class="price">
             <span>${{ $product->price }}</span>
+            @if ($product->compare_price)
+            <span class="discount-price">${{ $product->compare_price }}</span>
+            @endif
         </div>
     </div>
 </div>
