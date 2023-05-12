@@ -740,7 +740,7 @@
     </section>
     <!-- End Shipping Info -->
 
-@push('scripts')
+@section('scripts')
     <script type="text/javascript">
         //========= Hero Slider
         tns({
@@ -813,6 +813,6 @@
         timer();
         setInterval(timer, 1000);
     </script>
-@endpush
+@endsection
 
 </x-front-layout>
