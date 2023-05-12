@@ -29,3 +29,5 @@ Route::group([
 
 
 });
+
+Route::view('no-access', 'no_access');

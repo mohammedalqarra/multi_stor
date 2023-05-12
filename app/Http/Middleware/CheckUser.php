@@ -23,9 +23,9 @@ class CheckUser
         }
 
         if (Auth::user()->type == 'user') {
-            //  return redirect('/no-access');
-            abort(404);
-            
+            return redirect('/no-access');
+            //  abort(404);
+
         }
 
 
