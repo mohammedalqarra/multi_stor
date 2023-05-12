@@ -14,15 +14,15 @@ class CheckUser
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next , ...$types): Response
     {
-        //  $user = $request->user();
+          $user = $request->user();
 
-        if (Auth::user()->type == 'admin') {
+        if (Auth::user()->type == $types) {
             return redirect()->route('login');
         }
 
-        if (Auth::user()->type == 'user') {
+        if (!in_array(Auth::user()->types , $types)) {
             return redirect('/no-access');
             //  abort(404);
 
