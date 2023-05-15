@@ -28,4 +28,20 @@ class Cart extends Model
         //     $cart->id = Str::uuid();
         // });
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class)->withDefault([
+            'name' => 'Anonymous',
+        ]);
+    }
+
+
+
+    public function product()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
 }
