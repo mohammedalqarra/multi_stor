@@ -11,7 +11,7 @@ class Cart extends Model
 {
     use HasFactory;
 
-    protected $incrementing  = false;
+    public $incrementing  = false;
 
     protected $fillable =  [
         'cookie_id', 'user_id', 'product_id' , 'quantity' , 'options'

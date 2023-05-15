@@ -20,54 +20,28 @@ class CartController extends Controller
         // $repository = new CartModelRepository();
         // $repository = App::make('cart');
         // $items = $repository->get();
-        $items = $cart->get();
+        //  $items = $cart->get();
         return view('front.cart', [
-            'cart' => $items,
+            'cart' => $cart,
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request , CartRepository $cart)
+    public function store(Request $request, CartRepository $cart)
     {
         //
         $request->validate([
-            'product_id' => ['required', 'int', 'exists:product,id'],
+            'product_id' => ['required', 'int', 'exists:products,id'],
             'quantity' => ['nullable', 'int', 'min:1'],
         ]);
 
-        $product = Product::findOrFail($request->post('product_id'));
-      //  $repository = new CartModelRepository();
-      //  $repository->add($product, $request->post('quantity'));
-      $cart->add($product, $request->post('quantity'));
-
+        $prooduct = Product::findOrFail($request->post('product_id'));
+        //  $repository = new CartModelRepository();
+        //  $repository->add($product, $request->post('quantity'));
+        $cart->add($prooduct, $request->post('quantity'));
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
     /**
      * Update the specified resource in storage.
      */
@@ -75,25 +49,24 @@ class CartController extends Controller
     {
         //
         $request->validate([
-            'product_id' => ['required', 'int', 'exists:product,id'],
+            'product_id' => ['required', 'int', 'exists:products,id'],
             'quantity' => ['nullable', 'int', 'min:1'],
         ]);
 
-        $product = Product::findOrFail($request->post('product_id'));
-      //  $repository = new CartModelRepository();
-      //  $repository->update($product, $request->post('quantity'));
-      $cart->update($product, $request->post('quantity'));
-
+        $prooduct = Product::findOrFail($request->post('product_id'));
+        //  $repository = new CartModelRepository();
+        //  $repository->update($product, $request->post('quantity'));
+        $cart->update($prooduct, $request->post('quantity'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( CartRepository $cart , $id)
+    public function destroy(CartRepository $cart, $id)
     // id - parameter in the route
     {
         //
-       // $repository = new CartModelRepository();
+        // $repository = new CartModelRepository();
 
         $cart->delete($id);
     }
