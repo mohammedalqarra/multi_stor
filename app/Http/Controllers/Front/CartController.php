@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Product;
+use App\Repositories\Cart\CartModelRepository;
 
 class CartController extends Controller
 {
@@ -13,6 +15,14 @@ class CartController extends Controller
     public function index()
     {
         //
+        $repository = new CartModelRepository();
+
+        $items = $repository->get();
+
+        return view('front.cart', [
+            'cart' => $items,
+        ]);
+
     }
 
     /**
@@ -29,6 +39,14 @@ class CartController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'product_id' => ['required' , 'int' , 'exists:product,id'],
+            'quantity' => ['nullable' , 'int' , 'min:1'],
+        ]);
+
+        $product = Product::findOrFail($request->post('product_id'));
+        $repository = new CartModelRepository();
+        $repository->add($product , $request->post('quantity'));
     }
 
     /**
@@ -53,6 +71,14 @@ class CartController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $request->validate([
+            'product_id' => ['required' , 'int' , 'exists:product,id'],
+            'quantity' => ['nullable' , 'int' , 'min:1'],
+        ]);
+
+        $product = Product::findOrFail($request->post('product_id'));
+        $repository = new CartModelRepository();
+        $repository->update($product , $request->post('quantity'));
     }
 
     /**
@@ -61,5 +87,8 @@ class CartController extends Controller
     public function destroy(string $id)
     {
         //
+        $repository = new CartModelRepository();
+
+        $repository->delete($id);
     }
 }
