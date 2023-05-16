@@ -10,16 +10,17 @@ class CartObserver
     /**
      * Handle the Cart "created" event.
      */
-    public function created(Cart $cart): void
+    public function created(Cart $cart)
     {
         //
         $cart->id = Str::uuid();
+
     }
 
     /**
      * Handle the Cart "updated" event.
      */
-    public function updated(Cart $cart): void
+    public function updated(Cart $cart)
     {
         //
     }

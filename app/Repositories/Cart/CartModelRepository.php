@@ -18,18 +18,27 @@ class CartModelRepository implements CartRepository
     {
         //return Cart::all();
 
-        return Cart::with('products')->where('cookie_id', '=', $this->getCookieId())->get();
+        dd(Cart::with('products')->where('cookie_id', '=', $this->getCookieId())->get());
     }
 
     public function add(Product $product, $quantity = 1)
     {
+        $item = Cart::where('product_id' , '=' , $product->id)
+        ->where('cookie_id', '=', $this->getCookieId())
+        ->first();
 
-        return Cart::create([
-            'cooke_id' => $this->getCookieId(),
-            'user_id' => Auth::id(),
-            'product_id' => $product->id,
-            'quantity' => $quantity,
-        ]);
+       // dd($item);
+        if(!$item){
+            return Cart::create([
+                'cooke_id' => $this->getCookieId(),
+                'user_id' => Auth::id(),
+                'product_id' => $product->id,
+                'quantity' => $quantity,
+            ]);
+        }
+
+        return $item->increment('quantity' , $quantity);
+
     }
 
 
@@ -70,7 +79,7 @@ class CartModelRepository implements CartRepository
             $cookie_id = Str::uuid();
             // ما برجع responce بما ببعت معها cookie او بخزنها بال Q
 
-            //            Cookie::queue('cart_id', $cookie_id, Carbon::now()->addDays(30)); // carbon convert ont
+            //            Cookie::queue('cart_id', $cookie_id, Carbon::now()->addDays(30)); // carbon convert int
             Cookie::queue('cart_id', $cookie_id, 30 * 24  * 60);
             // dd('cookie_id');
         }

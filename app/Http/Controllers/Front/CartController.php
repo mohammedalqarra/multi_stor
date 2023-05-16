@@ -11,10 +11,16 @@ use App\Repositories\Cart\CartRepository;
 
 class CartController extends Controller
 {
+    protected $cart;
+
+    public function __construct(CartRepository $cart)
+    {
+        $this->cart = $cart;
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index(CartRepository $cart)
+    public function index()
     {
         //
         // $repository = new CartModelRepository();
@@ -22,14 +28,14 @@ class CartController extends Controller
         // $items = $repository->get();
         //  $items = $cart->get();
         return view('front.cart', [
-            'cart' => $cart,
+            'cart' => $this->cart,
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, CartRepository $cart)
+    public function store(Request $request)
     {
         //
         $request->validate([
@@ -37,10 +43,12 @@ class CartController extends Controller
             'quantity' => ['nullable', 'int', 'min:1'],
         ]);
 
-        $prooduct = Product::findOrFail($request->post('product_id'));
+        $product = Product::findOrFail($request->post('product_id'));
         //  $repository = new CartModelRepository();
         //  $repository->add($product, $request->post('quantity'));
-        $cart->add($prooduct, $request->post('quantity'));
+        $this->cart->add($product, $request->post('quantity'));
+        return redirect()->route('cart.index')->with('success' , 'Product added to Cart');
+
     }
     /**
      * Update the specified resource in storage.
@@ -53,10 +61,10 @@ class CartController extends Controller
             'quantity' => ['nullable', 'int', 'min:1'],
         ]);
 
-        $prooduct = Product::findOrFail($request->post('product_id'));
+        $product = Product::findOrFail($request->post('product_id'));
         //  $repository = new CartModelRepository();
         //  $repository->update($product, $request->post('quantity'));
-        $cart->update($prooduct, $request->post('quantity'));
+        $cart->update($product, $request->post('quantity'));
     }
 
     /**
