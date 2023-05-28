@@ -13,7 +13,7 @@ class CartServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        //name variable inside service container
         $this->app->bind(CartRepository::class , function(){
             return new CartModelRepository();
         });

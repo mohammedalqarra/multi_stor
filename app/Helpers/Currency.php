@@ -7,14 +7,14 @@ use NumberFormatter;
 class Currency
 {
 
-    public function __invoke(...$params)
+    public function __invoke(...$params)  //magic method استدعاء ال class ك function
     {
-        return static::format(...$params);
+        return static::format(...$params); // array bt parameter
     }
 
     public static function format($amount, $currency = null)
     {
-        $formatter = new NumberFormatter(config('app.local') , NumberFormatter::CURRENCY );
+        $formatter = new NumberFormatter(config('app.locale') , NumberFormatter::CURRENCY );
         if($currency === null) {
             $currency =  config('app.currency' , 'USD');
         }

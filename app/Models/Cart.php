@@ -6,15 +6,14 @@ use Illuminate\Support\Str;
 use App\Observers\CartObserver;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Cart extends Model
 {
     use HasFactory;
 
-    public $incrementing  = false;
+    public $incrementing = false;
 
     protected $fillable =  [
         'cookie_id', 'user_id', 'product_id' , 'quantity' , 'options'
@@ -43,7 +42,7 @@ class Cart extends Model
             $cookie_id = Str::uuid();
             // ما برجع responce بما ببعت معها cookie او بخزنها بال Q
 
-            //            Cookie::queue('cart_id', $cookie_id, Carbon::now()->addDays(30)); // carbon convert int
+            //Cookie::queue('cart_id', $cookie_id, Carbon::now()->addDays(30)); // carbon convert int
             Cookie::queue('cart_id', $cookie_id , 30 * 24  * 60);
             // dd('cookie_id');
         }
@@ -59,11 +58,9 @@ class Cart extends Model
     }
 
 
-
     public function product()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Product::class);
     }
-
 
 }

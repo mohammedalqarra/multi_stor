@@ -8,9 +8,9 @@ use Illuminate\Support\Str;
 class CartObserver
 {
     /**
-     * Handle the Cart "created" event.
+     * Handle the Cart "creating" event.
      */
-    public function created(Cart $cart)
+    public function creating(Cart $cart)
     {
         //
         $cart->id = Str::uuid();
