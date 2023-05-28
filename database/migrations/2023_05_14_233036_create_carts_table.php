@@ -26,7 +26,6 @@ return new class extends Migration
             $table->unsignedSmallInteger('quantity')->default(1);
             $table->json('options')->nullable();
             $table->timestamps();
-
             $table->unique(['cookie_id', 'product_id']);
         });
     }
