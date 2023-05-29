@@ -31,6 +31,8 @@ Route::get('/products', [ProductsController::class, 'index'])
 Route::get('/products/{product:slug}', [ProductsController::class, 'show'])
     ->name('products.show');
 
+Route::get('/products/{id}' , [CartController::class , 'remove_cart'])->name('products.remove_cart');
+
 Route::resource('cart', CartController::class);
 // Route::get('/dash', function () {
 //     return view('dashboard');

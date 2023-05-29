@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
-use App\Repositories\Cart\CartModelRepository;
 use App\Repositories\Cart\CartRepository;
+use App\Repositories\Cart\CartModelRepository;
 
 class CartController extends Controller
 {
@@ -79,4 +80,11 @@ class CartController extends Controller
 
         $cart->delete($id);
     }
+
+    // public function remove_cart($id)
+    // {
+    //     Cart::destroy($id);
+
+    //     return redirect()->back();
+    // }
 }
