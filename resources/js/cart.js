@@ -24,7 +24,21 @@
         });
     });
 
-    $('.add-to-cart').on('click', function(e){
+    $('.lni-close').on('click' , function (e) {
+        let id = $(this).data("id");
+        $.ajax({
+            URL: "/cart/" + id,
+            method: 'delete',
+            data: {
+                _token: csrf_token,
+            },
+            success: response => {
+                $(`#${id}`).remove();
+            },
+        });
+    });
+
+    $('.item').on('click', function(e){
         $.ajax({
             url: "/cart/",
             method: "post",

@@ -107,7 +107,7 @@
                                 <div class="row align-items-end">
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="button cart-button">
-                                            <button class="btn" type="submit" style="width: 100%;">Add to Cart</button>
+                                            <button class="btn add-to-cart" type="submit" style="width: 100%;">Add to Cart</button>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-12">
