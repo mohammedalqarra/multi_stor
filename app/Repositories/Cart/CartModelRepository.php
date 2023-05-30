@@ -12,11 +12,11 @@ use Illuminate\Support\Str;
 
 class CartModelRepository implements CartRepository
 {
-    protected $items;
+    protected $items; // store items all Repository
 
     public function __construct()
     {
-        $this->items = collect([]);
+        $this->items = collect([]); // convert array to the collection
     }
 
     public function get(): collection

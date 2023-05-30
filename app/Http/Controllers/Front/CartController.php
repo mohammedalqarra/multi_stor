@@ -45,40 +45,52 @@ class CartController extends Controller
             'quantity' => ['nullable', 'int', 'min:1'],
         ]);
 
+
         $product = Product::findOrFail($request->post('product_id'));
         //  $repository = new CartModelRepository();
         //  $repository->add($product, $request->post('quantity'));
         $this->cart->add($product, $request->post('quantity'));
+
+        if($request->expectsJson()){
+            
+            return response()->json([
+                'message' => 'Item added to cart!',
+            ], 201);
+        }
         return redirect()->route('cart.index')->with('success' , 'Product added to Cart');
 
     }
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CartRepository $cart)
+    public function update(Request $request, $id)
     {
         //
         $request->validate([
-            'product_id' => ['required', 'int', 'exists:products,id'],
-            'quantity' => ['nullable', 'int', 'min:1'],
+           // 'product_id' => ['required', 'int', 'exists:products,id'],
+            'quantity' => ['required', 'int', 'min:1'],
         ]);
 
-        $product = Product::findOrFail($request->post('product_id'));
-        //  $repository = new CartModelRepository();
-        //  $repository->update($product, $request->post('quantity'));
-        $cart->update($product, $request->post('quantity'));
+       // $product = Product::findOrFail($request->post('product_id'));
+       //  $repository = new CartModelRepository();
+       //  $repository->update($product, $request->post('quantity'));
+        $this->cart->update($id, $request->post('quantity'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CartRepository $cart, $id)
+    public function destroy($id)
     // id - parameter in the route
     {
         //
         // $repository = new CartModelRepository();
 
-        $cart->delete($id);
+        $this->cart->delete($id);
+
+        return[
+            'message' => 'Item deleted!',
+        ];
     }
 
     // public function remove_cart($id)

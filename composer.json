@@ -50,7 +50,11 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "prod":  [
+            "your-build-command"
         ]
+
     },
     "extra": {
         "laravel": {
