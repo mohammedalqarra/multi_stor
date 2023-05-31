@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Front;
 
+use Throwable;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Events\OrderCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\Cart\CartRepository;
 use Symfony\Component\Intl\Countries;
-use Throwable;
+use App\Repositories\Cart\CartRepository;
 
 class CheckoutController extends Controller
 {
@@ -68,8 +69,10 @@ class CheckoutController extends Controller
                 }
             }
 
-            $cart->empty();
             DB::commit();
+            
+            // event('order.created' , $order , Auth::id());
+            event(new OrderCreated($order));
 
 
         } catch (Throwable $e) {

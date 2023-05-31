@@ -25,5 +25,5 @@ class OrderItem extends Pivot
     public function order(){
         return $this->belongsTo(Order::class);
     }
-    
+
 }
