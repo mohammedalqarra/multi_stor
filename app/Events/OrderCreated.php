@@ -15,7 +15,8 @@ class OrderCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $order;    /**
+    public $order;
+    /**
      * Create a new event instance.
      */
     public function __construct(Order $order)
@@ -31,9 +32,9 @@ class OrderCreated
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
     public function broadcastOn(): array
-    {
+    { // web soket // chat تعتبر event
         return [
-            new PrivateChannel('channel-name'),
+            new PrivateChannel('channel-name'), // وين بدي أبث
         ];
     }
 }
