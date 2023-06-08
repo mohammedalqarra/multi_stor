@@ -36,13 +36,13 @@ class OrderCreatedNotification extends Notification
 
         $channels = ['database'];
 
-        if($notifiable->notification_preferences['order_create']['sms'] ?? false){
+        if($notifiable->notification_preferences['order_created']['sms'] ?? false){
             $channels[] = 'database';
         }
-        if($notifiable->notification_preferences['order_create']['mail'] ?? false){
+        if($notifiable->notification_preferences['order_created']['mail'] ?? false){
             $channels[] = 'mail';
         }
-        if($notifiable->notification_preferences['order_create']['broadcast'] ?? false){
+        if($notifiable->notification_preferences['order_created']['broadcast'] ?? false){
             $channels[] = 'broadcast';
         }
 
@@ -55,7 +55,7 @@ class OrderCreatedNotification extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        $addr = $this->order->billingAddress();
+        $addr = $this->order->billingAddress;
 
         return (new MailMessage)
                     ->subject("New Order #{$this->order->number}")

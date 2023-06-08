@@ -25,7 +25,7 @@ class SendOrderCreatedNotification
     public function handle(OrderCreated $event): void
     {
         //
-
+        //$store = $event->order->store;
         $order = $event->order;
 
         $user = User::Where('store_id' , $order->store_id)->first();
