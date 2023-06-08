@@ -24,7 +24,7 @@ class OrderAddress extends Model
         return $this->first_name . ' ' . $this->last_name;
     }
 
-    
+
     public function getCountryNameAttribute(){
         return Countries::getName($this->country);
     }
