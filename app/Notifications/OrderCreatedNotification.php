@@ -59,7 +59,7 @@ class OrderCreatedNotification extends Notification
 
         return (new MailMessage)
                     ->subject("New Order #{$this->order->number}")
-                  //  ->form('notification@gaza-store.ps' , 'Gaza Store')
+                    ->from('notification@gaza-store.ps' , 'Gaza Store')
                     ->greeting("Hi {$notifiable->name}!") // ترحيب
                     ->line("A New order (#{$this->order->number}) create by {$addr->name} from {$addr->country_name}. ") // paraphrase
                     ->action('Notification Action', url('/dashboard')) // button لمين نرسل الرسالة
