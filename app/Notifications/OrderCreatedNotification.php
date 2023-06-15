@@ -32,7 +32,7 @@ class OrderCreatedNotification extends Notification
     public function via(object $notifiable): array
     {
 
-        return ['mail' , 'broadcast'];
+        return ['mail'];
 
         $channels = ['database'];
 
@@ -61,7 +61,7 @@ class OrderCreatedNotification extends Notification
                     ->subject("New Order #{$this->order->number}")
                     ->from('notification@gaza-store.ps' , 'Gaza Store')
                     ->greeting("Hi {$notifiable->name}!") // ترحيب
-                    ->line("A New order (#{$this->order->number}) create by {$addr->name} from {$addr->country_name}. ") // paraphrase
+                    ->line("A New order (#{$this->order->number}) created by {$addr->name} from {$addr->country_name}. ") // paraphrase
                     ->action('Notification Action', url('/dashboard')) // button لمين نرسل الرسالة
                     ->line('Thank you for using our application!');
                    // ->view()

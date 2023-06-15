@@ -21,9 +21,9 @@ class Store extends Model
 
     protected $KeyType = 'int';
 
-    // protected $incrementing = true;
+    protected $incrementing = true;
 
-    // protected $timestamp = true;
+    protected $timestamp = true;
 
 
 

@@ -29,13 +29,20 @@ class SendOrderCreatedNotification
         $order = $event->order;
 
         $user = User::Where('store_id' , $order->store_id)->first();
-
-        if ($user) {
+        dd($user);
             $user->notify(new OrderCreatedNotification($order));
-        }
+
+
+
+         // many user
         // $users = User::Where('store_id' , $order->store_id)->get();
 
         // Notification::send($users , new OrderCreatedNotification($order));
+
+        // $users = User::Where('store_id' , $order->store_id)->get();
+        // foreach($users as $user){
+        //     $user->notify(new OrderCreatedNotification($order));
+        // }
 
     }
 }
