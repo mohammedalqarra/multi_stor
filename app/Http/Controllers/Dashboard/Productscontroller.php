@@ -93,8 +93,15 @@ class ProductsController extends Controller
 
         $saved_tag = Tag::all();
 
+
         foreach($tags as $item){
-            $slug = Str::slug($item->value);
+            // $slugcount  = Product::where('slug', 'like' , '%' . Str::slug ($item->value) . '%')->count();
+            // $slug = Str::slug($item->value);
+            // if($slugcount){
+            //     $slug = Str::slug($item->value).'_'.$slugcount;
+            // }
+
+             $slug = Str::slug($item->value);
             $tag = $saved_tag->where('slug' , $slug)->first(); // search collection
             if(!$tag){
                 $tag = Tag::create([
