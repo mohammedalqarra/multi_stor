@@ -26,7 +26,7 @@ class DeductProductQuantity
     public function handle(OrderCreated $event)
     {
         $order = $event->order;
-      //  dd($order->products);
+        //  dd($order->products);
         // UPDATE products SET quantity = quantity - 1
         try {
             foreach ($order->products as $product) {
@@ -38,7 +38,6 @@ class DeductProductQuantity
                 //     ]);
             }
         } catch (Throwable $e) {
-
         }
     }
 }

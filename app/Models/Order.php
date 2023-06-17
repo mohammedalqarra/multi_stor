@@ -11,8 +11,8 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'store_id' , 'payment_method' , 'status' , 'payment_status',
-    ]; 
+        'user_id', 'store_id' , 'payment_method' , 'status' , 'payment_status' , 'price',
+    ];
 
     public function user(){
         return $this->belongsTo(User::class)->withDefault([

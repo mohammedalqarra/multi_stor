@@ -31,10 +31,9 @@ class OrderCreated
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    public function broadcastOn(): array
+    public function broadcastOn()
     { // web soket // chat تعتبر event
-        return [
-            new PrivateChannel('channel-name'), // وين بدي أبث
-        ];
+        return  new PrivateChannel('channel-name'); // وين بدي أبث
+
     }
 }
