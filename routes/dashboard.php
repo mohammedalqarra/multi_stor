@@ -24,7 +24,7 @@ Route::group([
 
     Route::resource('/categories', CategoriesController::class);
 
-    Route::resource('products', ProductsController::class);
+  //      Route::resource('products', ProductsController::class);
 
 
 
