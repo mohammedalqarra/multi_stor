@@ -16,7 +16,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('public/dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
 
     @yield('styles')
 </head>
@@ -254,7 +254,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Bootstrap 4 -->
     <script src="{{ asset('public/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
-    <script src="{{ asset('public/dist/js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
     <script>
         const userID = "{{ Auth::id() }}"
     </script>
