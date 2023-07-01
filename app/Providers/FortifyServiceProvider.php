@@ -2,18 +2,19 @@
 
 namespace App\Providers;
 
+use Illuminate\Http\Request;
+use Laravel\Fortify\Fortify;
 use App\Actions\Fortify\CreateNewUser;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Cache\RateLimiting\Limit;
+use App\Actions\Fortify\AuthenticateUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
-use App\Actions\Fortify\UpdateUserProfileInformation;
-use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Contracts\LoginResponse;
 use Laravel\Fortify\Contracts\LogoutResponse;
-use Laravel\Fortify\Fortify;
+use App\Actions\Fortify\UpdateUserProfileInformation;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -64,6 +65,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
+
         RateLimiter::for('login', function (Request $request) {
             $email = (string) $request->email;
 
@@ -77,6 +79,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::viewPrefix('auth.');
 
         if (Config::get('fortify.guard') == 'admin') {
+            Fortify::authenticateUsing([new AuthenticateUser , 'authenticate']);
             Fortify::viewPrefix('auth.');
         }else {
             Fortify::viewPrefix('front.auth.');
