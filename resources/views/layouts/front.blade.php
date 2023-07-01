@@ -86,18 +86,26 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-end">
-                            <div class="user">
-                                <i class="lni lni-user"></i>
-                                Hello
-                            </div>
-                            <ul class="user-login">
-                                <li>
-                                    <a href="login.html">Sign In</a>
-                                </li>
-                                <li>
-                                    <a href="register.html">Register</a>
-                                </li>
-                            </ul>
+                            @auth
+                                <div class="user">
+                                    <i class="lni lni-user"></i>
+                                        {{ Auth::user()->name }}
+                                </div>
+                                <ul class="user-login">
+                                    <li>
+                                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout').submit()">Sign In</a>
+                                    </li>
+                                    <form action="{{ route('logout') }}" id="logout" method="post" style="display:none">
+                                        @csrf
+                                    </form>
+                                </ul>
+                                @else
+                                <div class="user">
+                                    <i class="lni lni-user">
+                                        {{ __('Hello')}}
+                                    </i>
+                                </div>
+                            @endauth
                         </div>
                     </div>
                 </div>
@@ -158,7 +166,7 @@
                                         <span class="total-items">0</span>
                                     </a>
                                 </div>
-                                    <x-cart-menu />
+                                <x-cart-menu />
                             </div>
                         </div>
                     </div>
