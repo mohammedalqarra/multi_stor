@@ -8,8 +8,9 @@ use App\Http\Controllers\Dashboard\ProfileController;
 
 Route::group([
     // 'middleware' => ['auth' , CheckUser::class],
-    'middleware' => ['auth' , 'auth.type:admin,super-admin'],
-    'prefix'  => 'dashboard',
+    'middleware' => ['auth:admin'],
+    'as' => 'dashboard.',
+    'prefix'  => 'admin/dashboard',
 ], function () {
 
     Route::get('profile' , [ProfileController::class , 'edit'])->name('profile.edit');

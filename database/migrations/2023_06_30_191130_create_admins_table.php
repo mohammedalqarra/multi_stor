@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone_number')->unique();
             $table->boolean('super_admin')->default(false);
-            $table->enum('status', ['active','inactive'])->default(['active']);
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
     }
