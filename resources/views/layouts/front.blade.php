@@ -118,7 +118,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-3 col-7">
                         <!-- Start Header Logo -->
-                        <a class="navbar-brand" href="index.html">
+                        <a class="navbar-brand" href="#">
                             <img src="{{ asset('assets/images/logo/logo.svg') }}" alt="Logo">
                         </a>
                         <!-- End Header Logo -->
@@ -387,7 +387,7 @@
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="footer-logo">
                                 <a href="index.html">
-                                    <img src="{{ asset('assets/images/logo/white-logo.svg') }}" alt="#">
+                                    <img src="{{ asset('assets/images/logo/white-logo.svg') }}" alt="">
                                 </a>
                             </div>
                         </div>

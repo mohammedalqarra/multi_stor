@@ -67,9 +67,51 @@ class Product extends Model
 
     public function getSalePercentAttribute()
     {
-        if(!$this->compare_price){
+        if (!$this->compare_price) {
             return 0;
         }
         return round(100 - (100 * $this->price / $this->compare_price), 1);
+    }
+
+
+    public function scopeFilter(Builder $builder, $filters)
+    {
+        $options = array_merge([
+            'store_id' => null,
+            'category_id' => null,
+            'tag_id' => null,
+            'status' => 'active',
+        ], $filters);
+
+        $builder->when($options['status'] , function ($query , $status){
+            return $query->where('status' , $status);
+        });
+
+        $builder->when($options['store_id'], function ($builder, $value) {
+            return   $builder->where('store_id', $value);
+        });
+
+        $builder->when($options['category_id'], function ($builder, $value) {
+            return   $builder->where('category_id ', $value);
+        });
+
+        $builder->when($options['tag_id'], function ($builder, $value) {
+
+            $builder->whereExists(function ($query) use ($value) {
+                $query->select(1)
+                    ->from('product_tag')
+                    ->whereRaw('product_id = products.id')
+                    ->where('tag_id', $value);
+            });
+
+            // or
+
+            // $builder->whereRaw('id IN (SELECT product_id FROM product_tag WHERE tag_id = ?)', [$value]);
+            // $builder->whereRaw('EXISTS (SELECT 1 FROM product_tag WHERE tag_id = ? AND product_id = products.id)', [$value]);
+
+            // $builder->whereHas('tags', function($builder) use ($value) {
+            //     $builder->where('id', $value);
+            // });
+        });
     }
 }
