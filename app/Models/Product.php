@@ -19,9 +19,21 @@ class Product extends Model
         'price', 'compare_price', 'status'
     ];
 
+    protected $hidden = [
+       'image' , 'created_at' , 'updated_at' , 'deleted_at'
+    ];
+
+    protected $appended= [
+        'image_url',
+    ];
+
     protected static function booted()
     {
         static::addGlobalScope('store', new StoreScope); // بناء جملة الإرسال
+
+        static::creating(function(Product $product){
+            $product->slug = Str::slug($product->name);
+        });
     }
 
     public function category()
@@ -83,16 +95,16 @@ class Product extends Model
             'status' => 'active',
         ], $filters);
 
-        $builder->when($options['status'] , function ($query , $status){
-            return $query->where('status' , $status);
+        $builder->when($options['status'], function ($query, $status) {
+            return $query->where('status', $status);
         });
 
         $builder->when($options['store_id'], function ($builder, $value) {
-            return   $builder->where('store_id', $value);
+            $builder->where('store_id', $value);
         });
 
         $builder->when($options['category_id'], function ($builder, $value) {
-            return   $builder->where('category_id ', $value);
+            $builder->where('category_id', $value);
         });
 
         $builder->when($options['tag_id'], function ($builder, $value) {
@@ -103,9 +115,6 @@ class Product extends Model
                     ->whereRaw('product_id = products.id')
                     ->where('tag_id', $value);
             });
-
-            // or
-
             // $builder->whereRaw('id IN (SELECT product_id FROM product_tag WHERE tag_id = ?)', [$value]);
             // $builder->whereRaw('EXISTS (SELECT 1 FROM product_tag WHERE tag_id = ? AND product_id = products.id)', [$value]);
 
