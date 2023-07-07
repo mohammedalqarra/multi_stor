@@ -6,11 +6,11 @@ use Illuminate\Foundation\Auth\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
+use Laravel\Sanctum\HasApiTokens;
 
 class Admin extends User
 {
-    use HasFactory , Notifiable;
+    use HasFactory , Notifiable , HasApiTokens  ;
 
 
     protected $fillable = [

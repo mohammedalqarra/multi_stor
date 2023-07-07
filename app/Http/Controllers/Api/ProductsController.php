@@ -5,11 +5,16 @@ namespace App\Http\Controllers\Api;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ProductResource;
 use Illuminate\Support\Facades\Response;
 
 class ProductsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except('index', 'show');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -42,6 +47,12 @@ class ProductsController extends Controller
             'price'    => 'required|numeric|min:0',
             'compare_price'=> 'nullable|numeric|gt:price',
         ]);
+
+        $user = $request->user();
+
+        if(!$user->tokenCan('products.create')){
+            abort(403 , 'Not allowed');
+        }
 
         $product  = Product::create($request->all());
 
@@ -79,7 +90,11 @@ class ProductsController extends Controller
             'compare_price' => 'nullable|numeric|gt:price',
         ]);
 
+        $user = $request->user();
 
+        if(!$user->tokenCan('products.update')){
+            abort(403 , 'Not allowed');
+        }
         $product->update($request->all());
 
         return Response::json($product);
@@ -93,6 +108,14 @@ class ProductsController extends Controller
     public function destroy(string $id)
     {
         //
+        $user = Auth::guard('sanctum')->user();
+
+        if(!$user->tokenCan('products.delete')){
+            return response([
+                'message' => 'Not allowed',
+            ], 403);
+        }
+
         Product::destroy($id);
 
         return response()->json([
