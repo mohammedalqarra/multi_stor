@@ -49,14 +49,17 @@
                             <ul class="menu-top-link">
                                 <li>
                                     <div class="select-position">
-                                        <select id="select4">
-                                            <option value="0" selected>$ USD</option>
-                                            <option value="1">€ EURO</option>
-                                            <option value="2">$ CAD</option>
-                                            <option value="3">₹ INR</option>
-                                            <option value="4">¥ CNY</option>
-                                            <option value="5">৳ BDT</option>
-                                        </select>
+                                        <form action="{{ route('currency.store') }}" method="POST">
+                                            @csrf
+                                            <select name="currency_code" onchange="this.form.submit()">
+                                                <option value="USD" @selected('USD' == session('currency_code'))>$ USD</option>
+                                                <option value="EUR" @selected('EUR' == session('currency_code'))>€ EURO</option>
+                                                <option value="ILS" @selected('ILS' == session('currency_code'))>$ ILS</option>
+                                                <option value="JOD" @selected('JOD' == session('currency_code'))>₹ JOD</option>
+                                                <option value="SAR" @selected('SAR' == session('currency_code'))>¥ SAR</option>
+                                                <option value="QAR" @selected('QAR' == session('currency_code'))>৳ QAR</option>
+                                            </select>
+                                        </form>
                                     </div>
                                 </li>
                                 <li>
@@ -89,20 +92,23 @@
                             @auth
                                 <div class="user">
                                     <i class="lni lni-user"></i>
-                                        {{ Auth::user()->name }}
+                                    {{ Auth::user()->name }}
                                 </div>
                                 <ul class="user-login">
                                     <li>
-                                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout').submit()">Sign In</a>
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault(); document.getElementById('logout').submit()">Sign
+                                            In</a>
                                     </li>
-                                    <form action="{{ route('logout') }}" id="logout" method="post" style="display:none">
+                                    <form action="{{ route('logout') }}" id="logout" method="post"
+                                        style="display:none">
                                         @csrf
                                     </form>
                                 </ul>
-                                @else
+                            @else
                                 <div class="user">
                                     <i class="lni lni-user">
-                                        {{ __('Hello')}}
+                                        {{ __('Hello') }}
                                     </i>
                                 </div>
                             @endauth
