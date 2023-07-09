@@ -29,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrapFive();
         Paginator::useBootstrapFour();
 
+
         JsonResource::withoutWrapping(); // object not data
 
         // Paginator::defaultView('pagination.custom');

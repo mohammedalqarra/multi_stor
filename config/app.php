@@ -72,7 +72,7 @@ return [
     // 'timezone' => 'UTC',
     'timezone' => 'Asia/Gaza',
 
-    'api_token' => env('API_TOKEN'),
+    'api_token' => env('API__TOKEN'),
 
     /*
     |--------------------------------------------------------------------------
@@ -85,7 +85,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'ar',
 
     'currency' => 'USD',
 
