@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/tiny-slider.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/glightbox.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" />
-    @yield('styles')
+    @stack('styles')
 </head>
 
 <body>
@@ -49,7 +49,7 @@
                             <ul class="menu-top-link">
                                 <li>
                                     <div class="select-position">
-                                        <form action="{{ route('currency.store') }}" method="POST">
+                                        <form action="{{ route('currency.store') }}" method="post">
                                             @csrf
                                             <select name="currency_code" onchange="this.form.submit()">
                                                 <option value="USD" @selected('USD' == session('currency_code'))>$ USD</option>
@@ -65,14 +65,12 @@
                                 <li>
                                     <div class="select-position">
                                         <form action="{{ URL::current() }}" method="get">
-                                        <select name="locale" id="select5" onchange="this.form.submit()">
-                                            <option value="ar" selected>English</option>
-                                            <option value="es">Español</option>
-                                            <option value="fr">Français</option>
-                                            <option value="ar">العربية</option>
-                                            <option value="in">हिन्दी</option>
-                                            <option value="cn">বাংলা</option>
-                                        </select>
+                                            <select name="locale" onchange="this.form.submit()">
+                                                @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                                    <option value="{{ $localeCode }}" @selected($localeCode == App::currentLocale())>
+                                                        {{ $properties['native'] }}</option>
+                                                @endforeach
+                                            </select>
                                         </form>
                                     </div>
                                 </li>
@@ -96,10 +94,10 @@
                                     {{ Auth::user()->name }}
                                 </div>
                                 <ul class="user-login">
-                                    <li>
+                                    <li>    
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault(); document.getElementById('logout').submit()">Sign
-                                            out</a>
+                                            Out</a>
                                     </li>
                                     <form action="{{ route('logout') }}" id="logout" method="post"
                                         style="display:none">
@@ -108,20 +106,17 @@
                                 </ul>
                             @else
                                 <div class="user">
-                                    <i class="lni lni-user">
-                                        {{ __('Hello') }}
-                                    </i>
+                                    @auth
+                                        <i class="lni lni-user"></i>
+                                        {{-- {{ __('Hello')}} --}}
+                                    @endauth
                                 </div>
                                 <ul class="user-login">
                                     <li>
-                                        <a href="{{ route('login') }}">
-                                            {{ Lang::get('Sign In') }}
-                                        </a>
+                                        <a href="{{ route('login') }}">{{ Lang::get('Sign In') }}</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('register') }}">
-                                            {{ __('Register') }}
-                                        </a>
+                                        <a href="{{ route('register') }}">{{ __('Register') }}</a>
                                     </li>
                                 </ul>
                             @endauth
@@ -137,7 +132,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-3 col-7">
                         <!-- Start Header Logo -->
-                        <a class="navbar-brand" href="#">
+                        <a class="navbar-brand" href="index.html">
                             <img src="{{ asset('assets/images/logo/logo.svg') }}" alt="Logo">
                         </a>
                         <!-- End Header Logo -->
@@ -320,81 +315,12 @@
         <!-- End Header Bottom -->
     </header>
     <!-- End Header Area -->
+
+    <!-- Start Breadcrumbs -->
     {{ $breadcrumb ?? '' }}
-    <!-- Start Breadcrumbs
-    <div class="breadcrumbs">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 col-md-6 col-12">
-                    <div class="breadcrumbs-content">
-                        <h1 class="page-title">Login</h1>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-12">
-                    <ul class="breadcrumb-nav">
-                        <li><a href="index.html"><i class="lni lni-home"></i> Home</a></li>
-                        <li>Login</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    End Breadcrumbs -->
+    <!-- End Breadcrumbs -->
+
     {{ $slot }}
-    <!-- Start Account Login Area
-    <div class="account-login section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1 col-12">
-                    <form class="card login-form" method="post">
-                        <div class="card-body">
-                            <div class="title">
-                                <h3>Login Now</h3>
-                                <p>You can login using your social media account or email address.</p>
-                            </div>
-                            <div class="social-login">
-                                <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-12"><a class="btn facebook-btn"
-                                            href="javascript:void(0)"><i class="lni lni-facebook-filled"></i> Facebook
-                                            login</a></div>
-                                    <div class="col-lg-4 col-md-4 col-12"><a class="btn twitter-btn"
-                                            href="javascript:void(0)"><i class="lni lni-twitter-original"></i> Twitter
-                                            login</a></div>
-                                    <div class="col-lg-4 col-md-4 col-12"><a class="btn google-btn"
-                                            href="javascript:void(0)"><i class="lni lni-google"></i> Google login</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="alt-option">
-                                <span>Or</span>
-                            </div>
-                            <div class="form-group input-group">
-                                <label for="reg-fn">Email</label>
-                                <input class="form-control" type="email" id="reg-email" required>
-                            </div>
-                            <div class="form-group input-group">
-                                <label for="reg-fn">Password</label>
-                                <input class="form-control" type="password" id="reg-pass" required>
-                            </div>
-                            <div class="d-flex flex-wrap justify-content-between bottom-content">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input width-auto" id="exampleCheck1">
-                                    <label class="form-check-label">Remember me</label>
-                                </div>
-                                <a class="lost-pass" href="account-password-recovery.html">Forgot password?</a>
-                            </div>
-                            <div class="button">
-                                <button class="btn" type="submit">Login</button>
-                            </div>
-                            <p class="outer-link">Don't have an account? <a href="register.html">Register here </a>
-                            </p>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    End Account Login Area -->
 
     <!-- Start Footer Area -->
     <footer class="footer">
@@ -406,7 +332,7 @@
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="footer-logo">
                                 <a href="index.html">
-                                    <img src="{{ asset('assets/images/logo/white-logo.svg') }}" alt="">
+                                    <img src="{{ asset('assets/images/logo/white-logo.svg') }}" alt="#">
                                 </a>
                             </div>
                         </div>
@@ -554,8 +480,9 @@
     <script src="{{ asset('assets/js/tiny-slider.js') }}"></script>
     <script src="{{ asset('assets/js/glightbox.min.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
-    @yield('scripts')
-    {{-- {{ $scripts }} --}}
+
+    @stack('scripts')
+
 </body>
 
 </html>

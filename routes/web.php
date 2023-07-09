@@ -8,6 +8,7 @@ use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\ProductsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,28 +25,33 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', [
-    HomeController::class, 'index'
-])->name('home');
+Route::group([
+    'prefix' => LaravelLocalization::setLocale(),
+], function () {
+    Route::get('/', [
+        HomeController::class, 'index'
+    ])->name('home');
 
-Route::get('/products', [ProductsController::class, 'index'])
-    ->name('products.index');
+    Route::get('/products', [ProductsController::class, 'index'])
+        ->name('products.index');
 
-Route::get('/products/{product:slug}', [ProductsController::class, 'show'])
-    ->name('products.show');
+    Route::get('/products/{product:slug}', [ProductsController::class, 'show'])
+        ->name('products.show');
 
-Route::get('checkout' , [CheckoutController::class , 'create'])->name('checkout');
-Route::post('checkout' , [CheckoutController::class, 'store']);
-
-
-Route::get('auth/user/2fa', [TwoFactorAuthentcationController::class, 'index'])
-->name('front.2fa');
-
-Route::post('currency', [CurrencyConverterController::class, 'store'])
-->name('currency.store');
+    Route::get('checkout', [CheckoutController::class, 'create'])->name('checkout');
+    Route::post('checkout', [CheckoutController::class, 'store']);
 
 
-Route::resource('cart', CartController::class);
+    Route::get('auth/user/2fa', [TwoFactorAuthentcationController::class, 'index'])
+        ->name('front.2fa');
+
+    Route::post('currency', [CurrencyConverterController::class, 'store'])
+        ->name('currency.store');
+
+
+    Route::resource('cart', CartController::class);
+});
+
 // Route::get('/dash', function () {
 //     return view('dashboard');
 // })->middleware(['auth']);
