@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 
@@ -18,6 +19,10 @@ class CategoriesController extends Controller
      */
     public function index()
     {
+        if(Gate::denies('categories.view')){
+            abort(403);
+        }
+
         // helper function
         $request = request();
 
@@ -58,6 +63,9 @@ class CategoriesController extends Controller
      */
     public function create()
     {
+        if(!Gate::allows('categories.create')){
+            abort(403);
+        }
         //
         $parents = Category::all();
         $category = new Category();
@@ -70,6 +78,8 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('categories.create');
+
         //
         $clena_data = $request->validate(Category::rules(), [ // ترجع ال data بعد فحصها
             'required'  => 'This Field (:attribute) is required',
@@ -106,6 +116,9 @@ class CategoriesController extends Controller
      */
     public function show(Category $category)
     {
+        if(Gate::denies('categories.view')){
+            abort(403);
+        }
         //
         return view('admin.categories.show' , [
             'category' => $category
@@ -118,6 +131,7 @@ class CategoriesController extends Controller
      */
     public function edit(string $id)
     {
+        Gate::authorize('categories.update');
         //
         // try{
         //     $category = Category::findOrFail($id);
@@ -137,6 +151,8 @@ class CategoriesController extends Controller
      */
     public function update(CategoryRequest $request, string $id)
     {
+
+
         //
         //  $request->validate(Category::rules($id));
 
@@ -165,6 +181,8 @@ class CategoriesController extends Controller
      */
     public function destroy(string $id)
     {
+        Gate::authorize('categories.delete');
+
         //$category::where('id' , '=' , $id)->delete();
         $category = Category::findOrFail($id);
         $category->delete();

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class CategoryRequest extends FormRequest
 {
@@ -12,7 +13,10 @@ class CategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        if ($this->route('category')) {
+            return Gate::allows('categories.update');
+        }
+        return  Gate::allows('categories.create');
     }
 
     /**
@@ -31,9 +35,10 @@ class CategoryRequest extends FormRequest
         return Category::rules($id);
     }
 
-    public function messages(){
+    public function messages()
+    {
         return [
-        'name.unique'  => 'This name is already exists',
+            'name.unique'  => 'This name is already exists',
         ];
     }
 }
