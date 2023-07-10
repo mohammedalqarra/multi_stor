@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
-class dashboardController extends Controller
+class DashboardController extends Controller
 {
+    //
     // public function __construct()
     // {
     //     $this->middleware(['auth']);
@@ -22,10 +22,11 @@ class dashboardController extends Controller
         $title = 'Store';
 
         $user = Auth::user();
-        // return response : view , json , redirect , file
+       // return response : view , json , redirect , file
         return view('admin.index' , [
             'user' => 'Mohammed',
             'title' => $title
         ]);
+      //  return view('admin.index', compact('user'));
     }
 }

@@ -105,7 +105,7 @@ return [
         ],
         'users' => [
             'provider' => 'admins',
-            'table' => 'password_reset_tokens',
+            'table' => 'password_resets_tokens',
             'expire' => 60,
             'throttle' => 60,
         ],

@@ -79,7 +79,8 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::viewPrefix('auth.');
 
         if (Config::get('fortify.guard') == 'admin') {
-            Fortify::authenticateUsing([new AuthenticateUser , 'authenticate']);
+                    Fortify::authenticateUsing([new AuthenticateUser , 'authenticate']);
+
             Fortify::viewPrefix('auth.');
         }else {
             Fortify::viewPrefix('front.auth.');

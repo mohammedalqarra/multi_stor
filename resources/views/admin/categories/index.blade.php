@@ -10,11 +10,12 @@
 @section('content')
 
 
-    <div class="mb-5">
-        <a href="{{ route('categories.create') }}" class="btn btn-lg btn-outline-primary w-25">Create</a>
-        <a href="{{ route('categories.trash') }}" class="btn btn-lg btn-outline-dark w-25">Trash</a>
-
-    </div>
+<div class="mb-5">
+    @if(Auth::user()->can('categories.create'))
+    <a href="{{ route('admin.categories.create') }}" class="btn btn-sm btn-outline-primary mr-2">Create</a>
+    @endif
+    <a href="{{ route('admin.categories.trash') }}" class="btn btn-sm btn-outline-dark">Trash</a>
+</div>
     {{-- (session()->has('success')) --}}
     {{-- @if (session('msg'))
         <div class="alert alert-{{ session('type') }}">
