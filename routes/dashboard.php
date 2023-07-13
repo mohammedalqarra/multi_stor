@@ -5,10 +5,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Dashboard\CategoriesController;
+use App\Http\Controllers\Dashboard\RolesController;
 
 Route::group([
     // 'middleware' => ['auth' , CheckUser::class],
-    'middleware' => ['auth:admin'],
+    'middleware' => ['auth:admin,web'],
     'as' => 'dashboard.',
     'prefix'  => 'admin/dashboard',
 ], function () {
@@ -24,9 +25,16 @@ Route::group([
     Route::put('categories/{category}/restore' , [CategoriesController::class, 'restore'])->name('categories.restore');
     Route::delete('categories/{category}/force-delete' , [CategoriesController::class, 'forceDelete'])->name('categories.force-delete');
 
-    Route::resource('/categories', CategoriesController::class);
+   // Route::resource('/categories', CategoriesController::class);
+    //      Route::resource('products', ProductsController::class);
 
-  //      Route::resource('products', ProductsController::class);
+
+    Route::resources([
+         'products' => ProductsController::class,
+         'categories' => CategoriesController::class,
+         'roles' => RolesController::class,
+    ]);
+
 
 
 

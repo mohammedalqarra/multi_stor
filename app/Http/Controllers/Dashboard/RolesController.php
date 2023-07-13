@@ -75,7 +75,9 @@ class RolesController extends Controller
     public function edit(Role  $role)
     {
         //
-        return view('admin.roles.edit', compact('role'));
+        $role_abilities  = $role->abilities()->pluck('type' , 'ability')->toArray();
+
+        return view('admin.roles.edit', compact('role' , 'role_abilities'));
 
     }
 

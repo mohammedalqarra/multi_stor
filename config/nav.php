@@ -8,7 +8,7 @@ return [
         'active' => 'dashboard'
     ],
     [
-        'icon' => 'far fa-circle nav-icon',
+        'icon' => 'far fa-tags nav-icon',
         'route' => 'categories.index',
         'title' => 'Categories',
         'badge' => 'New',
@@ -16,19 +16,25 @@ return [
         'ability' => 'categories.view',
     ],
     [
-        'icon' => 'far fa-circle nav-icon',
+        'icon' => 'far fa-box nav-icon',
         'route' => 'categories.index',
         'title' => 'Products',
         'active' => 'products.*',
         'ability' => 'products.view',
-
     ],
     [
-        'icon' => 'far fa-circle nav-icon',
+        'icon' => 'far fa-receipt nav-icon',
         'route' => 'categories.index',
         'title' => 'Orders',
         'active' => 'orders.*',
         'ability' => 'orders.view',
+    ],
 
+    [
+        'icon' => 'far fa-shield nav-icon',
+        'route' => 'roles.index',
+        'title' => 'Roles',
+        'active' => 'orders.*',
+        'ability' => 'roles.view',
     ],
 ];

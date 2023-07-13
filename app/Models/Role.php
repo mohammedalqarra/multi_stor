@@ -15,6 +15,10 @@ class Role extends Model
         'name',
     ];
 
+    public function abilities(){
+        return $this->hasMany(RoleAbility::class);
+    }
+
     public static function createWithAbilities(Request $request)
     {
         DB::beginTransaction();
@@ -23,12 +27,12 @@ class Role extends Model
             'name' => $request->post('name'),
         ]);
 
-        foreach($request->post('abilities') as $ability)
+        foreach($request->post('abilities') as $ability => $value)
         {
             RoleAbility::create([
                 'role_id' => $role->id,
-                'ability_id' => $ability,
-                'type' => 'allow',
+                'ability' => $ability,
+                'type' => $value,
             ]);
         }
         DB::commit();
@@ -48,13 +52,13 @@ class Role extends Model
             'name' => $request->post('name'),
         ]);
 
-        foreach($request->post('abilities') as $ability)
+        foreach($request->post('abilities') as $ability => $value)
         {
             RoleAbility::updateOrCreate([
                 'role_id' => $this->id,
-                'ability_id' => $ability,
+                'ability' => $ability,
             ] , [
-                'type' => 'allow',
+                'type' => $value,
             ]);
         }
         DB::commit();

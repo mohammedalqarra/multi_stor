@@ -4,15 +4,15 @@
 return [
 
     'categories' => [
-        'categories.view' => 'View categories',
-        'categories.create' => 'Create categories',
-        'categories.update' => 'Update categories',
-        'categories.delete' => 'Delete categories',
+        'categories.view' =>  __('View categories'),
+        'categories.create' =>  __('Create categories'),
+        'categories.update' =>  __('Update categories'),
+        'categories.delete' =>  __('Delete categories'),
 
-        'products.view' => 'View products',
-        'products.create' => 'Create products',
-        'products.update' => 'Update products',
-        'products.delete' => 'Delete products',
+        'products.view' =>  __('View products'),
+        'products.create' =>  __('Create products'),
+        'products.update' =>  __('Update products'),
+        'products.delete' =>  __('Delete products'),
 
         'orders.view' => 'View orders',
         'orders.create' => 'Create orders',

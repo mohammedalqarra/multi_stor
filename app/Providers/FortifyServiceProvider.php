@@ -40,7 +40,7 @@ class FortifyServiceProvider extends ServiceProvider
             public function toResponse($request)
             {
                 if($request->user('admin')){
-                    return redirect()->intended('admin/dashboard') ;
+                    return redirect()->intended('admin') ;
                 }else {
                     return redirect()->intended('/') ;
                 }
