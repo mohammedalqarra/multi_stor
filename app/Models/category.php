@@ -13,7 +13,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory , SoftDeletes;
+    // SoftDeletes
+    use HasFactory ;
 
     protected $fillable = [
         'name', 'parent_id', 'description', 'image', 'status', 'slug'

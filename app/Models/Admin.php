@@ -18,5 +18,4 @@ class Admin extends User
         'name', 'email', 'password', 'phone_number', 'super_admin', 'status',
     ];
 
- 
 }
