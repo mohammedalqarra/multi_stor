@@ -113,6 +113,7 @@ class ProductsController extends Controller
         if(!$user->tokenCan('products.delete')){
             return response([
                 'message' => 'Not allowed',
+
             ], 403);
         }
 

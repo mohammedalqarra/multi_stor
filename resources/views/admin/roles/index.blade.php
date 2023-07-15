@@ -10,6 +10,12 @@
 
 
 @section('content')
+
+    <div class="mb-5">
+        @can('create' , 'App\Models\Role')
+        <a href="{{ route('roles.create') }}" class="btn btn-sm btn-outline-primary mr-2">Create</a>
+        @endcan
+    </div>
     <x-alert type="success" />
     <x-alert type="info" />
 

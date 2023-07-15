@@ -9,6 +9,10 @@ use App\Http\Controllers\Controller;
 
 class AdminsController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Admin::class , 'admin');
+    }
     /**
      * Display a listing of the resource.
      */

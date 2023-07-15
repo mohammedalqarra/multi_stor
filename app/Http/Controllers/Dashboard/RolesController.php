@@ -9,6 +9,11 @@ use App\Models\RoleAbility;
 
 class RolesController extends Controller
 {
+    public function __construct() // all authorization
+    {
+        $this->authorizeResource(Role::class , 'role');
+    }
+
     /**
      * Display a listing of the resource.
      */

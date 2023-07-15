@@ -17,6 +17,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
+        $this->authorize('view-any' , Product::class);
         //2
         // $user = Auth::user();
         // if($user->store_id){
@@ -39,6 +40,7 @@ class ProductsController extends Controller
     public function create()
     {
         //
+        $this->authorize('create', Product::class);
     }
 
     /**
@@ -47,6 +49,7 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
         //
+        $this->authorize('create', Product::class);
     }
 
     /**
@@ -55,6 +58,8 @@ class ProductsController extends Controller
     public function show(string $id)
     {
         //
+        $product = Product::findOrFail($id);
+        $this->authorize('view', $product);
     }
 
     /**
@@ -69,7 +74,11 @@ class ProductsController extends Controller
         // }else {
         //     $products = Product::findOrFail($id);
         // }
+
+
         $product = Product::findOrFail($id);
+
+        $this->authorize('update' , $product);
 
         $tags = implode(',' , $product->tags()->pluck('name')->toArray());
 
@@ -82,6 +91,7 @@ class ProductsController extends Controller
     public function update(Request $request, product $product)
     {
         //
+        $this->authorize('update' , $product);
 
         $product->update( $request->except('tags') );
 
@@ -123,5 +133,8 @@ class ProductsController extends Controller
     public function destroy(string $id)
     {
         //
+        $product= Product::findOrFail($id);
+
+        $this->authorize('delete' , $product);
     }
 }
