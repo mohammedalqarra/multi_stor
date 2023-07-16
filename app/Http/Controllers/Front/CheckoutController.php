@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Intl\Countries;
+use App\Exceptions\InvalidOrderException;
 use App\Repositories\Cart\CartRepository;
 
 class CheckoutController extends Controller
@@ -21,7 +22,8 @@ class CheckoutController extends Controller
     {
 
         if ($cart->get()->count() == 0) {
-            return redirect()->route('home');
+           // return redirect()->route('home');
+           throw new InvalidOrderException('Cart is Empty');
         }
 
         return view(
@@ -80,7 +82,7 @@ class CheckoutController extends Controller
             // event('order.created' , $order , Auth::id());
             event(new OrderCreated($order));
         } catch (Throwable $e) {
-        
+
             DB::rollBack();
             throw $e;
         }

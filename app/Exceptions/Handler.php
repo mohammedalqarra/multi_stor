@@ -44,10 +44,8 @@ class Handler extends ExceptionHandler
     public function register(): void
     {
         $this->reportable(function (QueryException $e) {
-            //
-            if($e->getCode() == '23000')
-            {
-                Log::warning($e->getMessage());
+            if ($e->getCode() === '23000') {
+                Log::channel('sql')->warning($e->getMessage());
                 return false;
             }
 
@@ -55,22 +53,21 @@ class Handler extends ExceptionHandler
         });
 
 
-        $this->renderable(function (QueryException $e , $request) {
+        $this->renderable(function (QueryException $e, $request) {
             if ($e->getCode() == 23000) {
                 $message = 'Foreign key constraint failed';
             } else {
                 $message = $e->getMessage();
             }
-            if($request->expectsJson()) {
+            if ($request->expectsJson()) {
                 return response()->json([
                     'message' => $message,
-                ], 400 );
+                ], 400);
             }
             return redirect()->back()->withInput()->withErrors([
                 'message' => $e->getMessage(),
             ])
-                ->with('info' , $e->getMessage());
+                ->with('info', $e->getMessage());
         });
     }
-
 }
