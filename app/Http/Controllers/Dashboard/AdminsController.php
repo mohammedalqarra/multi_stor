@@ -51,7 +51,7 @@ class AdminsController extends Controller
 
 
         return redirect()
-            ->route('admins.index')
+            ->route('admin.index')
             ->with('success', 'Admin created successfully');
     }
 
@@ -72,7 +72,7 @@ class AdminsController extends Controller
         $role  = Role::all();
         $admin_roles = $admin->roles()->pluck('id')->toArray();
 
-        return view('admins.edit', compact('admin', 'roles', 'admin_roles'));
+        return view('admin.edit', compact('admin', 'roles', 'admin_roles'));
 
     }
 
@@ -92,7 +92,7 @@ class AdminsController extends Controller
 
 
         return redirect()
-        ->route('admins.index')
+        ->route('admin.index')
         ->with('success', 'Admin update successfully');
     }
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\Dashboard\AdminsController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Dashboard\CategoriesController;
+use App\Http\Controllers\Dashboard\ImportProductsController;
 
 Route::group([
     // 'middleware' => ['auth' , CheckUser::class],
@@ -29,6 +30,9 @@ Route::group([
 
     // Route::resource('/categories', CategoriesController::class);
     //      Route::resource('products', ProductsController::class);
+
+    Route::get('products/import' , [ImportProductsController::class , 'create'])->name('products.import');
+    Route::post('products/import', [ImportProductsController::class, 'store']);
 
 
     Route::resources([
