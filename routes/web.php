@@ -1,14 +1,16 @@
 <?php
 
-use App\Http\Controllers\Front\Auth\TwoFactorAuthentcationController;
-use App\Http\Controllers\Front\CartController;
-use App\Http\Controllers\Front\CheckoutController;
-use App\Http\Controllers\front\CurrencyConverterController;
-use App\Http\Controllers\Front\HomeController;
-use App\Http\Controllers\Front\ProductsController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SocialController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Front\CartController;
+use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\CheckoutController;
+use App\Http\Controllers\Front\ProductsController;
+use App\Http\Controllers\Auth\SocialLoginController;
+use App\Http\Controllers\front\CurrencyConverterController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use App\Http\Controllers\Front\Auth\TwoFactorAuthentcationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +53,16 @@ Route::group([
 
     Route::resource('cart', CartController::class);
 });
+
+Route::get('auth/{provider}/redirect', [SocialLoginController::class, 'redirect'])
+    ->name('auth.socilaite.redirect');
+Route::get('auth/{provider}/callback', [SocialLoginController::class, 'callback'])
+    ->name('auth.socilaite.callback');
+
+Route::get('auth/{provider}/user', [SocialController::class, 'index']);
+
+
+
 
 // Route::get('/dash', function () {
 //     return view('dashboard');
