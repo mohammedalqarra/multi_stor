@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class OrderItem extends Pivot
 {
@@ -16,14 +16,15 @@ class OrderItem extends Pivot
 
     public $timestamps = false;
 
-    public function  product(){
+    public function product()
+    {
         return $this->belongsTo(Product::class)->withDefault([
-            'name' => $this->product_name,
+            'name' => $this->product_name
         ]);
     }
 
-    public function order(){
+    public function order()
+    {
         return $this->belongsTo(Order::class);
     }
-
 }

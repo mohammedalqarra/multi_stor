@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\front\CurrencyConverterController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Front\Auth\TwoFactorAuthentcationController;
+use App\Http\Controllers\Front\PaymentsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,7 +63,14 @@ Route::get('auth/{provider}/callback', [SocialLoginController::class, 'callback'
 Route::get('auth/{provider}/user', [SocialController::class, 'index']);
 
 
+Route::get('orders/{order}/pay', [PaymentsController::class, 'create'])
+    ->name('orders.payments.create');
 
+Route::post('orders/{order}/stripe/paymeny-intent', [PaymentsController::class, 'createStripePaymentIntent'])
+    ->name('stripe.paymentIntent.create');
+
+Route::get('orders/{order}/pay/stripe/callback', [PaymentsController::class, 'confirm'])
+    ->name('stripe.return');
 
 // Route::get('/dash', function () {
 //     return view('dashboard');

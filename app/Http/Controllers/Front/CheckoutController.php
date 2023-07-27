@@ -22,8 +22,8 @@ class CheckoutController extends Controller
     {
 
         if ($cart->get()->count() == 0) {
-           // return redirect()->route('home');
-           throw new InvalidOrderException('Cart is Empty');
+            // return redirect()->route('home');
+            throw new InvalidOrderException('Cart is Empty');
         }
 
         return view(
@@ -86,6 +86,6 @@ class CheckoutController extends Controller
             DB::rollBack();
             throw $e;
         }
-      //  return redirect()->route('home');
+        return redirect()->route('orders.payments.create' , $order->id);
     }
 }
