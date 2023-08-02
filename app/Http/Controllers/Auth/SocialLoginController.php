@@ -18,7 +18,7 @@ class SocialLoginController extends Controller
 
     public function redirect($provider)
     {
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver($provider)->redirect();
     }
 
 

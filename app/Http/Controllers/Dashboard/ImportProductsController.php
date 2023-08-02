@@ -11,7 +11,7 @@ class ImportProductsController extends Controller
     //
     public function create()
     {
-        return view('products.import');
+        return view('admin.products.import');
     }
 
     public function store(Request $request)
@@ -21,7 +21,7 @@ class ImportProductsController extends Controller
         $this->dispatch($job);
 
         return redirect()
-            ->route('dashboard.products.index')
+            ->route('admin.products.index')
             ->with('success', 'Import is running...');
     }
 }

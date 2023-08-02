@@ -13,10 +13,12 @@ use App\Http\Controllers\Dashboard\ImportProductsController;
 Route::group([
     // 'middleware' => ['auth' , CheckUser::class],
     'middleware' => ['auth:admin,web'],
-    'as' => 'dashboard.',
     'prefix'  => 'admin/dashboard',
 ], function () {
 
+    // Route::get('/', function () {
+    //     dd('Welcome to dashboard user routes.');
+    // });
     Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
 
@@ -31,7 +33,7 @@ Route::group([
     // Route::resource('/categories', CategoriesController::class);
     //      Route::resource('products', ProductsController::class);
 
-    Route::get('products/import' , [ImportProductsController::class , 'create'])->name('products.import');
+    Route::get('products/import', [ImportProductsController::class, 'create'])->name('products.import');
     Route::post('products/import', [ImportProductsController::class, 'store']);
 
 

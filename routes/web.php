@@ -12,6 +12,7 @@ use App\Http\Controllers\front\CurrencyConverterController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Front\Auth\TwoFactorAuthentcationController;
 use App\Http\Controllers\Front\PaymentsController;
+use App\Http\Controllers\StripeWebhooksController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +72,9 @@ Route::post('orders/{order}/stripe/paymeny-intent', [PaymentsController::class, 
 
 Route::get('orders/{order}/pay/stripe/callback', [PaymentsController::class, 'confirm'])
     ->name('stripe.return');
+
+
+    Route::any('stripe/webhook', [StripeWebhooksController::class, 'handle']);
 
 // Route::get('/dash', function () {
 //     return view('dashboard');
