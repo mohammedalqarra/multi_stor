@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\front\CurrencyConverterController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Front\Auth\TwoFactorAuthentcationController;
+use App\Http\Controllers\Front\OrdersController;
 use App\Http\Controllers\Front\PaymentsController;
 use App\Http\Controllers\StripeWebhooksController;
 
@@ -74,7 +75,11 @@ Route::get('orders/{order}/pay/stripe/callback', [PaymentsController::class, 'co
     ->name('stripe.return');
 
 
-    Route::any('stripe/webhook', [StripeWebhooksController::class, 'handle']);
+
+Route::any('stripe/webhook', [StripeWebhooksController::class, 'handle']);
+
+Route::get('/orders/{order}' , [OrdersController::class , 'show'])->name('orders.show');
+
 
 // Route::get('/dash', function () {
 //     return view('dashboard');
