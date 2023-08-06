@@ -25,6 +25,39 @@
             <div id="map" style="height: 400px;"></div>
         </div>
     </section>
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script>
+        var map, marker;
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+        // 3ec1b5ca840e02ff9917
+        var pusher = new Pusher('3ec1b5ca840e02ff9917', {
+            cluster: 'ap2',
+            channelAuthentication: {
+                endpoint: "/broadcasting/auth",
+                headers: {
+                    "X-CSRF-Token": "{{ csrf_token() }}"
+                },
+            },
+        });
+
+        var channel = pusher.subscribe('private-deliveries.{{ $order->id }}');
+        // App\Events\DeliveryLocationUpdated
+        channel.bind('location-updated', function(data) {
+            // alert(JSON.stringify(data));
+            // marker = new google.maps.Marker({
+            //     position: {
+            //         lat: Number(data.lat),
+            //         lng: Number(data.lng)
+            //     }
+            //     map: map,
+            // });
+            marker.setPosition({
+                lat: Number(data.lat),
+                lng: Number(data.lng),
+            });
+        });
+    </script>
     <script>
         // Initialize and add the map
         function initMap() {
@@ -33,8 +66,8 @@
                 // Check if $delivery->lat and $delivery->lng are defined
                 @if (isset($delivery->lat) && isset($delivery->lng))
                     const location = {
-                        lat: {{ $delivery->lat }},
-                        lng: {{ $delivery->lng }}
+                        lat: Number("{{ $delivery->lat }}"),
+                        lng: Number("{{ $delivery->lng }}")
                     };
                     // ... rest of your map initialization code ...
                 @endif
