@@ -16,7 +16,7 @@ class CurrencyConverter
     }
 
     public function convert(string $from, string $to, float $amount = 1): float
-    {
+        {
         $q = "{$from}_{$to}";
         $response = Http::baseUrl($this->baseUrl)
             ->get('/convert', [
@@ -27,14 +27,16 @@ class CurrencyConverter
 
         $result = $response->json();
 
-        if (isset($result[$q]['val'])) {
-            return $result[$q]['val'] * $amount;
-        } else {
-            // Handle the case when the key is not present in the response
-            // Throw an exception or return a default value
-            // OR
-            return 0.0; // or any other appropriate default value
-        }
+       return $result[$q]['val'] * $amount;
+
+
+        // if (isset($result[$q]['val'])) {
+        //            return $result[$q]['val'] * $amount;
+
+        // } else {
+  
+        //     return 0.0; // or any other appropriate default value
+        // }
     }
 
 }
