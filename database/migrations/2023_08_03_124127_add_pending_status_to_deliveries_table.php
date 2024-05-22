@@ -16,6 +16,7 @@ return new class extends Migration
             // $table->enum('status', ['pending', 'in-progress', 'delivered'])
             //     ->default('pending')
             //     ->change();
+            // تغير على ال  column
             DB::statement("ALTER TABLE `deliveries`
                 CHANGE COLUMN `status` `status` ENUM('pending','in-progress','delivered') NOT NULL DEFAULT 'pending'
             ");

@@ -23,14 +23,14 @@ class ProductsController extends Controller
         //
         // double collection
         $products =  Product::filter(
-            $request->query())
-            ->with('category:id,name' , 'store:id,name' , 'tags:id,name')
+            $request->query()
+        )
+            ->with('category:id,name', 'store:id,name', 'tags:id,name')
             // index => action
             ->paginate();
 
 
-            return ProductResource::collection($products);
-
+        return ProductResource::collection($products);
     }
 
     /**
@@ -45,20 +45,20 @@ class ProductsController extends Controller
             'category_id'  => 'required|exists:categories,id',
             'status'   => 'in:active,inactive',
             'price'    => 'required|numeric|min:0',
-            'compare_price'=> 'nullable|numeric|gt:price',
+            'compare_price' => 'nullable|numeric|gt:price',
         ]);
 
         $user = $request->user();
 
-        if(!$user->tokenCan('products.create')){
-            abort(403 , 'Not allowed');
+        if (!$user->tokenCan('products.create')) {
+            abort(403, 'Not allowed');
         }
 
         $product  = Product::create($request->all());
 
-        return Response::json($product , 201 , [
-            'Location'  => route('products.show' , $product->id)
-        ] );
+        return Response::json($product, 201, [
+            'Location'  => route('products.show', $product->id)
+        ]);
     }
 
     /**
@@ -67,12 +67,10 @@ class ProductsController extends Controller
     public function show(Product $product)
     {
         // return Product::FindOrFail($id);
-
         // single product
-
         return new ProductResource($product);
 
-        return $product->load('category:id,name' , 'store:id,name' , 'tags:id,name');
+        return $product->load('category:id,name', 'store:id,name', 'tags:id,name');
     }
 
     /**
@@ -92,14 +90,12 @@ class ProductsController extends Controller
 
         $user = $request->user();
 
-        if(!$user->tokenCan('products.update')){
-            abort(403 , 'Not allowed');
+        if (!$user->tokenCan('products.update')) {
+            abort(403, 'Not allowed');
         }
         $product->update($request->all());
 
         return Response::json($product);
-
-
     }
 
     /**
@@ -110,7 +106,7 @@ class ProductsController extends Controller
         //
         $user = Auth::guard('sanctum')->user();
 
-        if(!$user->tokenCan('products.delete')){
+        if (!$user->tokenCan('products.delete')) {
             return response([
                 'message' => 'Not allowed',
 
@@ -120,7 +116,7 @@ class ProductsController extends Controller
         Product::destroy($id);
 
         return response()->json([
-            'message' =>'success delete product with id '. $id
-        ] , 200);
+            'message' => 'success delete product with id ' . $id
+        ], 200);
     }
 }

@@ -40,12 +40,14 @@ class DeliveryLocationUpdated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
+        // PrivateChannel on inside auth حتى تقدر تشتغل
+        // chanel بيكون شي عام )( public)
         return new PrivateChannel('deliveries.' . $this->delivery->order_id);
-        
+
     }
 
-    public function broadcastWith(): array
-    { 
+    public function broadcastWith(): array // data private
+    {
         return [
             'lat' => $this->lat,
             'lng' => $this->lng,
@@ -54,6 +56,6 @@ class DeliveryLocationUpdated implements ShouldBroadcast
 
     public function broadcastAS()
     {
-        return 'location-updated'; 
+        return 'location-updated';
     }
 }

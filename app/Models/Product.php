@@ -19,11 +19,11 @@ class Product extends Model
         'price', 'compare_price', 'status'
     ];
 
-    protected $hidden = [
-       'image' , 'created_at' , 'updated_at' , 'deleted_at'
+    protected $hidden = [ // larvel use this delete properte in the json 
+        'image', 'created_at', 'updated_at', 'deleted_at'
     ];
 
-    protected $appended= [
+    protected $appended = [
         'image_url',
     ];
 
@@ -31,7 +31,7 @@ class Product extends Model
     {
         static::addGlobalScope('store', new StoreScope); // بناء جملة الإرسال
 
-        static::creating(function(Product $product){
+        static::creating(function (Product $product) {
             $product->slug = Str::slug($product->name);
         });
     }
